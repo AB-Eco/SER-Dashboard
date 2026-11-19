@@ -319,7 +319,7 @@ function drawWheel() {
       if (rot > 90) rot -= 180;               // keep it right-side-up
       else if (rot < -90) rot += 180;         // on the left half
       const opts = {
-        "text-anchor": "middle", "font-size": 10.5,
+        "text-anchor": "right", "font-size": 10.5,
         "font-family": "Helvetica, sans-serif", cursor: "pointer",
         transform: `rotate(${rot} ${lx} ${ly})`,
         "paint-order": "stroke", stroke: "rgba(255,255,255,0.85)",
