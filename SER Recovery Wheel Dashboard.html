@@ -309,7 +309,8 @@ function drawWheel() {
     const wedgeR = R_HUB + score * STAR_STEP;
     const fitsInside = wedgeR - R_HUB > 34;   // enough room for label + score
 
-    let t1, t2;
+    let t1;
+    //remove second line let t1, t2;
     if (fitsInside) {
       const rLab = wedgeR - 12;               // near the tip of the wedge
       const lx = CX + rLab * Math.cos(rad(mid));
@@ -324,12 +325,12 @@ function drawWheel() {
         "paint-order": "stroke", stroke: "rgba(255,255,255,0.85)",
         "stroke-width": 2.5
       };
-      t1 = txt(lx, ly, SHORT[name]  + " " + score.toFixed(1) + " ★" || name + " " + score.toFixed(1) + " ★", { ...opts, fill: "#2b2b33" });
-      const rSc = rLab - 13;                  // score sits one line closer to hub
-      const sx = CX + rSc * Math.cos(rad(mid));
-      const sy = CY + rSc * Math.sin(rad(mid));
-      t2 = txt(sx, sy, score.toFixed(1) + " ★",
-        { ...opts, fill: "#2b2b33", "font-weight": "bold" });
+      t1 = txt(lx, ly, SHORT[name] || name,  score.toFixed(1) + " ★", { ...opts, fill: "#2b2b33" });
+      //remove second line const rSc = rLab - 13;                  // score sits one line closer to hub
+      //remove second line const sx = CX + rSc * Math.cos(rad(mid));
+      //remove second line const sy = CY + rSc * Math.sin(rad(mid));
+      //remove second line t2 = txt(sx, sy, score.toFixed(1) + " ★",
+      //remove second line   { ...opts, fill: "#2b2b33", "font-weight": "bold" });
     } else {
       // short wedge: fall back to outside-the-rim label
       const lr = R_RIM + 12;
@@ -339,11 +340,11 @@ function drawWheel() {
       const lab = SHORT[name] || name;
       t1 = txt(lx, ly, lab, { "text-anchor": anchor, "font-size": 10.5,
         "font-family": "Helvetica, sans-serif", fill: "#2b2b33", cursor: "pointer" });
-     // t2 = txt(lx, ly + 12, score.toFixed(1) + " ★",
-     //   { "text-anchor": anchor, "font-size": 10.5, "font-weight": "bold",
-     //     fill: color, cursor: "pointer" });
+      t2 = txt(lx, ly + 12, score.toFixed(1) + " ★",
+        { "text-anchor": anchor, "font-size": 10.5, "font-weight": "bold",
+          fill: color, cursor: "pointer" });
     }
-    [t1].forEach(n => {
+    [t1, t2].forEach(n => {
       n.addEventListener("click", () => showDetail(name));
       n.addEventListener("mousemove", ev => showTip(ev, `<strong>${SHORT[name] || name}</strong><br>Score: ${score.toFixed(1)} ★`));
       n.addEventListener("mouseleave", hideTip);
