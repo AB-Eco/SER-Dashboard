@@ -306,7 +306,8 @@ function drawWheel() {
     });
 
       // radial label lying along the spoke, on top of the slice
-    const wedgeR = R_HUB + score * STAR_STEP;
+    //move it to the edge of the circle const wedgeR = R_HUB + score * STAR_STEP;
+    const wedgeR = 5
     const fitsInside = wedgeR - R_HUB > 34;   // enough room for label + score
 
     let t1, t2;
