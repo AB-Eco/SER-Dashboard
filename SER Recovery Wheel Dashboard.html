@@ -256,7 +256,7 @@ function drawWheel() {
   const slots = [];
   ATTR_ORDER.filter(a => byAttr[a]).forEach((attr, gi, arr) => {
     byAttr[attr].forEach(n => slots.push(n));
-    if (gi < arr.length - 1) slots.push(null);
+//blank slot between groups    if (gi < arr.length - 1) slots.push(null);
   });
 
   const SLOT_DEG = 360 / slots.length;
