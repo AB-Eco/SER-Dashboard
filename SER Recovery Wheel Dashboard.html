@@ -324,7 +324,7 @@ function drawWheel() {
         "paint-order": "stroke", stroke: "rgba(255,255,255,0.85)",
         "stroke-width": 2.5
       };
-      t1 = txt(lx, ly, SHORT[name] || name + " " + score.toFixed(1) + " ★", { ...opts, fill: "#2b2b33" });
+      t1 = txt(lx, ly, SHORT[name]  + " " + score.toFixed(1) + " ★" || name + " " + score.toFixed(1) + " ★", { ...opts, fill: "#2b2b33" });
       const rSc = rLab - 13;                  // score sits one line closer to hub
       const sx = CX + rSc * Math.cos(rad(mid));
       const sy = CY + rSc * Math.sin(rad(mid));
@@ -339,11 +339,11 @@ function drawWheel() {
       const lab = SHORT[name] || name;
       t1 = txt(lx, ly, lab, { "text-anchor": anchor, "font-size": 10.5,
         "font-family": "Helvetica, sans-serif", fill: "#2b2b33", cursor: "pointer" });
-      t2 = txt(lx, ly + 12, score.toFixed(1) + " ★",
-        { "text-anchor": anchor, "font-size": 10.5, "font-weight": "bold",
-          fill: color, cursor: "pointer" });
+     // t2 = txt(lx, ly + 12, score.toFixed(1) + " ★",
+     //   { "text-anchor": anchor, "font-size": 10.5, "font-weight": "bold",
+     //     fill: color, cursor: "pointer" });
     }
-    [t1, t2].forEach(n => {
+    [t1].forEach(n => {
       n.addEventListener("click", () => showDetail(name));
       n.addEventListener("mousemove", ev => showTip(ev, `<strong>${SHORT[name] || name}</strong><br>Score: ${score.toFixed(1)} ★`));
       n.addEventListener("mouseleave", hideTip);
