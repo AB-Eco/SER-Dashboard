@@ -348,6 +348,7 @@ function drawWheel() {
       n.addEventListener("mousemove", ev => showTip(ev, `<strong>${SHORT[name] || name}</strong><br>Score: ${score.toFixed(1)} ★`));
       n.addEventListener("mouseleave", hideTip);
     });
+  });   
 
   // hub: site score + coverage
   const sc = siteScore(state.yearIndex);
