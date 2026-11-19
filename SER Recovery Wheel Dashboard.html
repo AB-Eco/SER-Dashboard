@@ -328,8 +328,8 @@ function drawWheel() {
       const rSc = rLab - 13;                  // score sits one line closer to hub
       const sx = CX + rSc * Math.cos(rad(mid));
       const sy = CY + rSc * Math.sin(rad(mid));
-      t2 = txt(sx, sy, score.toFixed(1) + " ★",
-        { ...opts, fill: "#2b2b33", "font-weight": "bold" });
+    //don't show score here  t2 = txt(sx, sy, score.toFixed(1) + " ★",
+   //don't show score here     { ...opts, fill: "#2b2b33", "font-weight": "bold" });
    //always put inside } else {
       const lr = R_RIM + 12;
       const lx2 = CX + lr * Math.cos(rad(mid)), ly2 = CY + lr * Math.sin(rad(mid));
@@ -338,7 +338,7 @@ function drawWheel() {
  //remove name     const lab = SHORT[name] || name;
 //remove name      t1 = txt(lx, ly, lab, { "text-anchor": anchor, "font-size": 10.5,
  //remove name       "font-family": "Helvetica, sans-serif", fill: "#2b2b33", cursor: "pointer" });
-      t2 = txt(lx2, ly2 + 12, score.toFixed(1) + " ★",
+      t2 = txt(lx2, ly2, score.toFixed(1) + " ★",
         { "text-anchor": anchor, "font-size": 10.5, "font-weight": "bold",
           fill: color, cursor: "pointer" });
  //always put inside   }
