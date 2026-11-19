@@ -324,7 +324,7 @@ function drawWheel() {
         "paint-order": "stroke", stroke: "rgba(255,255,255,0.85)",
         "stroke-width": 2.5
       };
-      t1 = txt(lx, ly, SHORT[name] || name, { ...opts, fill: "#2b2b33" });
+      t1 = txt(lx, ly, SHORT[name] || name + " " + score.toFixed(1) + " ★", { ...opts, fill: "#2b2b33" });
       const rSc = rLab - 13;                  // score sits one line closer to hub
       const sx = CX + rSc * Math.cos(rad(mid));
       const sy = CY + rSc * Math.sin(rad(mid));
