@@ -312,7 +312,7 @@ function drawWheel() {
     const anchor = Math.abs(c) < 0.35 ? "middle" : (c > 0 ? "start" : "end");
     const lab = SHORT[name] || name;
     const t1 = txt(lx, ly, lab,
-      { "text-anchor": anchor, "font-size": 10.5, "font-family": "Helvetics, sans-serif", fill: "#2b2b33", cursor: "pointer" });
+      { "text-anchor": anchor, "font-size": 10.5, "font-family": "Helvetica, sans-serif", fill: "#2b2b33", cursor: "pointer" });
     const t2 = txt(lx, ly + 12, score.toFixed(1) + " ★",
       { "text-anchor": anchor, "font-size": 10.5, "font-weight": "bold", fill: color, cursor: "pointer" });
     [t1, t2].forEach(n => {
