@@ -9,15 +9,15 @@
     --ink: #2b2b33;
     --panel: #f6f5f2;
     /* one hue per SER attribute */
-    --c-threat: #b04a3a;      /* Absence of Threats */
-    --c-phys:   #3a6ea5;      /* Physical Conditions */
-    --c-spec:   #2e7d46;      /* Species Composition */
-    --c-struct: #7b5ea7;      /* Structural Diversity */
-    --c-func:   #c78f2d;      /* Ecosystem Function */
-    --c-exch:   #2a8f8f;      /* External Exchanges */
+    --c-threat: #b7e1f1;      /* Absence of Threats */
+    --c-phys:   #7bc5ff;      /* Physical Conditions */
+    --c-spec:   #0E90C2;      /* Species Composition */
+    --c-struct: #00646e;      /* Structural Diversity */
+    --c-func:   #93a4b6;      /* Ecosystem Function */
+    --c-exch:   #414755;      /* External Exchanges */
   }
   * { box-sizing: border-box; }
-  body { font-family: Georgia, 'Times New Roman', serif; color: var(--ink); margin: 0; background: #fffdf8; }
+  body { font-family: Lato, Helvetica, sans-serif; color: var(--ink); margin: 0; background: #fffdf8; }
   header { padding: 1.1rem 1.5rem 0.7rem; border-bottom: 3px solid var(--ink); }
   h1 { font-size: 1.25rem; margin: 0 0 0.2rem; }
   header p { margin: 0; font-size: 0.88rem; font-style: italic; opacity: 0.72; }
@@ -420,7 +420,7 @@ function drawWheel() {
     const anchor = Math.abs(c) < 0.35 ? "middle" : (c > 0 ? "start" : "end");
     const lab = SHORT[name] || name;
     const t1 = txt(lx, ly, lab,
-      { "text-anchor": anchor, "font-size": 10.5, "font-family": "Georgia, serif", fill: "#2b2b33", cursor: "pointer" });
+      { "text-anchor": anchor, "font-size": 10.5, "font-family": "Helvetics, sans-serif", fill: "#2b2b33", cursor: "pointer" });
     const t2 = txt(lx, ly + 12, score.toFixed(1) + " ★",
       { "text-anchor": anchor, "font-size": 10.5, "font-weight": "bold", fill: color, cursor: "pointer" });
     [t1, t2].forEach(n => {
