@@ -305,22 +305,49 @@ function drawWheel() {
       n.addEventListener("mouseleave", hideTip);
     });
 
-    // outer label + score
-    const lr = R_RIM + 12;
-    const lx = CX + lr * Math.cos(rad(mid)), ly = CY + lr * Math.sin(rad(mid));
-    const c = Math.cos(rad(mid));
-    const anchor = Math.abs(c) < 0.35 ? "middle" : (c > 0 ? "start" : "end");
-    const lab = SHORT[name] || name;
-    const t1 = txt(lx, ly, lab,
-      { "text-anchor": anchor, "font-size": 10.5, "font-family": "Helvetica, sans-serif", fill: "#2b2b33", cursor: "pointer" });
-    const t2 = txt(lx, ly + 12, score.toFixed(1) + " ★",
-      { "text-anchor": anchor, "font-size": 10.5, "font-weight": "bold", fill: color, cursor: "pointer" });
+      // radial label lying along the spoke, on top of the slice
+    const wedgeR = R_HUB + score * STAR_STEP;
+    const fitsInside = wedgeR - R_HUB > 34;   // enough room for label + score
+
+    let t1, t2;
+    if (fitsInside) {
+      const rLab = wedgeR - 12;               // near the tip of the wedge
+      const lx = CX + rLab * Math.cos(rad(mid));
+      const ly = CY + rLab * Math.sin(rad(mid));
+      let rot = mid;                          // align text along the radius
+      if (rot > 90) rot -= 180;               // keep it right-side-up
+      else if (rot < -90) rot += 180;         // on the left half
+      const opts = {
+        "text-anchor": "middle", "font-size": 10.5,
+        "font-family": "Helvetica, sans-serif", cursor: "pointer",
+        transform: `rotate(${rot} ${lx} ${ly})`,
+        "paint-order": "stroke", stroke: "rgba(255,255,255,0.85)",
+        "stroke-width": 2.5
+      };
+      t1 = txt(lx, ly, SHORT[name] || name, { ...opts, fill: "#2b2b33" });
+      const rSc = rLab - 13;                  // score sits one line closer to hub
+      const sx = CX + rSc * Math.cos(rad(mid));
+      const sy = CY + rSc * Math.sin(rad(mid));
+      t2 = txt(sx, sy, score.toFixed(1) + " ★",
+        { ...opts, fill: "#2b2b33", "font-weight": "bold" });
+    } else {
+      // short wedge: fall back to outside-the-rim label
+      const lr = R_RIM + 12;
+      const lx = CX + lr * Math.cos(rad(mid)), ly = CY + lr * Math.sin(rad(mid));
+      const c = Math.cos(rad(mid));
+      const anchor = Math.abs(c) < 0.35 ? "middle" : (c > 0 ? "start" : "end");
+      const lab = SHORT[name] || name;
+      t1 = txt(lx, ly, lab, { "text-anchor": anchor, "font-size": 10.5,
+        "font-family": "Helvetica, sans-serif", fill: "#2b2b33", cursor: "pointer" });
+      t2 = txt(lx, ly + 12, score.toFixed(1) + " ★",
+        { "text-anchor": anchor, "font-size": 10.5, "font-weight": "bold",
+          fill: color, cursor: "pointer" });
+    }
     [t1, t2].forEach(n => {
       n.addEventListener("click", () => showDetail(name));
-      n.addEventListener("mousemove", ev => showTip(ev, `<strong>${lab}</strong><br>Score: ${score.toFixed(1)} ★`));
+      n.addEventListener("mousemove", ev => showTip(ev, `<strong>${SHORT[name] || name}</strong><br>Score: ${score.toFixed(1)} ★`));
       n.addEventListener("mouseleave", hideTip);
     });
-  });
 
   // hub: site score + coverage
   const sc = siteScore(state.yearIndex);
