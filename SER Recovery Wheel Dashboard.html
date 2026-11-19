@@ -370,8 +370,8 @@ function showDetail(compName) {
     const d = Array.isArray(ind)
       ? ind
       : [ind.indicator, ind.reference_value, ind.value, ind.star_score, ind.datasheet_url];
-    const [iname, ref, val, stars, url] = d;
-    const [iname, ref, val, stars, url] = ind;
+ //   const [iname, ref, val, stars, url] = d;
+ //   const [iname, ref, val, stars, url] = ind;
     const link = url ? `<a href="${url}" target="_blank" rel="noopener">datasheet</a>` : "—";
     rows += `<tr><td>${iname}</td><td>${fmt(ref)}</td><td>${fmt(val)}</td><td><strong>${fmt(stars)}</strong></td><td>${link}</td></tr>`;
   });
