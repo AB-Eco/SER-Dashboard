@@ -243,15 +243,7 @@ function siteScore(yearIdx) {
 function drawWheel() {
   svg.innerHTML = "";
 
-  // star reference rings
-  for (let s = 1; s <= 5; s++) {
-    el("circle", { cx: CX, cy: CY, r: R_HUB + s * STAR_STEP,
-      fill: "none", stroke: "#ccc", "stroke-dasharray": "3 4" });
-    // ring number along the 12 o'clock axis
-    txt(CX + 4, CY - R_HUB - s * STAR_STEP + 4, s,
-        { "font-size": 9, fill: "#999", "font-family": "sans-serif" });
-  }
-  el("circle", { cx: CX, cy: CY, r: R_HUB, fill: "#fffdf8", stroke: "#999" });
+
 
   // spoke slots: components grouped by attribute, gap slot between groups
   const byAttr = {};
@@ -304,6 +296,16 @@ function drawWheel() {
         (base !== null ? `<br>Baseline: ${base.toFixed(1)} ★` : "")));
       n.addEventListener("mouseleave", hideTip);
     });
+
+     // star reference rings
+    for (let s = 1; s <= 5; s++) {
+      el("circle", { cx: CX, cy: CY, r: R_HUB + s * STAR_STEP,
+        fill: "none", stroke: "#ccc", "stroke-dasharray": "3 4" });
+      // ring number along the 12 o'clock axis
+      txt(CX + 4, CY - R_HUB - s * STAR_STEP + 4, s,
+          { "font-size": 9, fill: "#999", "font-family": "sans-serif" });
+    }
+    el("circle", { cx: CX, cy: CY, r: R_HUB, fill: "#fffdf8", stroke: "#999" });
 
     //radial label at the center of the slot 
     const wedgeR = R_HUB + 2.5 * STAR_STEP;
