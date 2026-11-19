@@ -365,7 +365,7 @@
                   "reference_value": 100.0,
                   "value": 80,
                   "star_score": 4.0,
-                  "datasheet_url": "https://github.com/AB-Eco/SER-Dashboard/blob/1b4533c9cfbdf89964c53b1d68e57079e2fc9fab/extractedDocument.pdf"
+                  "datasheet_url": "https://ab-eco.github.io/SER-Dashboard/extractedDocument.pdf"
                 },
                 {
                   "indicator": "Species richness of desirable herbaceous species",
