@@ -362,7 +362,7 @@ function drawWheel() {
   txt(CX, CY + 26, state.habitat === "all" && cov.assessed < cov.total
       ? `(${Math.round(100 * cov.assessed / cov.total)}% of site area)`
       : "", { "text-anchor": "middle", "font-size": 9.5, fill: "#666" });
-}
+});
 
 /* =====================================================================
    TOOLTIP
