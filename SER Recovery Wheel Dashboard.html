@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SER Recovery Wheel — Monitoring Dashboard</title>
+<style>
+  :root {
+    --ink: #2b2b33;
+    --panel: #f6f5f2;
+    /* one hue per SER attribute */
+    --c-threat: #b04a3a;      /* Absence of Threats */
+    --c-phys:   #3a6ea5;      /* Physical Conditions */
+    --c-spec:   #2e7d46;      /* Species Composition */
+    --c-struct: #7b5ea7;      /* Structural Diversity */
+    --c-func:   #c78f2d;      /* Ecosystem Function */
+    --c-exch:   #2a8f8f;      /* External Exchanges */
+  }
+  * { box-sizing: border-box; }
+  body { font-family: Georgia, 'Times New Roman', serif; color: var(--ink); margin: 0; background: #fffdf8; }
+  header { padding: 1.1rem 1.5rem 0.7rem; border-bottom: 3px solid var(--ink); }
+  h1 { font-size: 1.25rem; margin: 0 0 0.2rem; }
+  header p { margin: 0; font-size: 0.88rem; font-style: italic; opacity: 0.72; }
+
+  .controls {
+    display: flex; flex-wrap: wrap; gap: 1rem; align-items: center;
+    padding: 0.7rem 1.5rem; border-bottom: 1px solid #ddd; background: var(--panel);
+  }
+  .controls label { font-size: 0.85rem; font-weight: bold; margin-right: 0.3rem; }
+  select { font-family: inherit; font-size: 0.9rem; padding: 0.25rem 0.5rem; }
+  .toggle button {
+    font-family: inherit; font-size: 0.82rem; padding: 0.32rem 0.75rem;
+    border: 1px solid var(--ink); background: #fff; cursor: pointer; border-right-width: 0;
+  }
+  .toggle button:last-child { border-right-width: 1px; }
+  .toggle button.active { background: var(--ink); color: #fff; }
+  .scorebox { margin-left: auto; text-align: right; }
+  .scorebox .big { font-size: 1.7rem; font-weight: bold; line-height: 1; }
+  .scorebox .cap { font-size: 0.74rem; font-style: italic; opacity: 0.7; }
+
+  .legend {
+    display: flex; flex-wrap: wrap; gap: 0.4rem 1rem;
+    padding: 0.5rem 1.5rem; font-size: 0.75rem; border-bottom: 1px solid #eee;
+  }
+  .legend span::before {
+    content: ""; display: inline-block; width: 10px; height: 10px;
+    margin-right: 4px; border-radius: 2px; vertical-align: -1px;
+    background: var(--dot);
+  }
+
+  main { display: flex; flex-wrap: wrap; gap: 1.2rem; padding: 1.2rem; align-items: flex-start; }
+  .wheel-wrap { flex: 1 1 520px; min-width: 340px; }
+  svg { width: 100%; height: auto; display: block; }
+
+  .detail {
+    flex: 1 1 330px; min-width: 290px;
+    background: var(--panel); border: 1px solid #ddd; padding: 1rem 1.2rem;
+  }
+  .detail h2 { font-size: 1.02rem; margin: 0 0 0.1rem; }
+  .detail .attr-tag { font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; }
+  .detail table { width: 100%; border-collapse: collapse; font-size: 0.82rem; margin-top: 0.8rem; }
+  .detail th, .detail td { text-align: left; padding: 0.28rem 0.35rem; border-bottom: 1px solid #ddd; vertical-align: top; }
+  .detail th { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.04em; }
+  .detail a { color: var(--c-phys); }
+  .hint { font-size: 0.82rem; font-style: italic; opacity: 0.65; }
+
+  footer { padding: 0.7rem 1.5rem; font-size: 0.76rem; opacity: 0.65; border-top: 1px solid #ddd; }
+
+  #tooltip {
+    position: absolute; pointer-events: none; display: none;
+    background: var(--ink); color: #fff; font-size: 0.78rem;
+    padding: 0.35rem 0.6rem; border-radius: 4px; max-width: 240px; z-index: 10;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>SER Recovery Wheel — Monitoring Dashboard</h1>
+  <p>Scores reflect similarity to the reference model (5 ★ = five-star condition). Click a wedge for the indicators behind its score.</p>
+</header>
+
+<div class="controls">
+  <span><label for="year">Assessment year:</label> <select id="year"></select></span>
+  <span class="toggle" id="habitatToggle"></span>
+  <span class="scorebox">
+    <div class="big" id="siteScore">–</div>
+    <div class="cap" id="siteScoreCap">overall site score</div>
+  </span>
+</div>
+
+<div class="legend" id="legend"></div>
+
+<main>
+  <div class="wheel-wrap">
+    <svg id="wheel" viewBox="0 0 620 620" role="img" aria-label="SER recovery wheel polar bar chart"></svg>
+    <p class="hint" style="text-align:center">Dashed arc = baseline (2025). Radial rings mark 1–5 stars.</p>
+  </div>
+  <aside class="detail" id="detailPanel"></aside>
+</main>
+
+<footer>
+  Site scores are area-weighted averages of assessed habitat types only; unassessed habitats are
+  excluded from both numerator and denominator, and coverage is shown with each score.
+  Data: SER Five-star System &amp; Ecological Recovery Wheel (SER International Standards, 3rd ed.).
+</footer>
+
+<div id="tooltip"></div>
+
+<script>
+/* =====================================================================
+   DATA LOADING
+   Production: the page tries to fetch data.json (same folder — this is
+   what runs on GitHub Pages). If that fails (e.g. opened as a local
+   file), it falls back to the inline copy below, which is the same
+   dataset. When you regenerate data.json, update or delete the inline
+   copy so the fallback never goes stale.
+   ===================================================================== */
+let DATA = null;
+
+async function loadData() {
+  try {
+    const r = await fetch("data.json", { cache: "no-store" });
+    if (!r.ok) throw new Error(r.status);
+    DATA = await r.json();
+  } catch (e) {
+    console.warn("data.json not reachable, using inline copy:", e);
+    DATA = INLINE_DATA;
+  }
+  init();
+}
+
+/* Inline copy of data.json (compact form: indicators are
+   [indicator, reference_value, value, star_score, datasheet_url]) */
+const INLINE_DATA = {
+  habitatNames: {
+    bhsw: "Bayhead Swamp", hwfo: "Hardwood Forest", cytu: "Cypress Tupelo Swamp",
+    cane: "Rivercane Grassland", pine: "Longleaf Pine Savanna"
+  },
+  years: [
+    { year: "2025", habitats: {
+      cytu: { acres: 186.6, components: {
+        "Desirable Plants":        { attribute: "Species Composition", score: 3.3, indicators: [["Cypress or tupelo stems/acre", 200, 130, 3.3, null]] },
+        "Desirable Animals":       { attribute: "Species Composition", score: 2.6, indicators: [["Bird species richnes", 40, 20, 2.5, null], ["Bat species richness", 10, 8, 4.0, null], ["Reptile/amphibian species richness", 30, 18, 3.0, null], ["Small mammal species richness", 5, 1, 1.0, null]] },
+        "No Undesirable Species":  { attribute: "Species Composition", score: 5.0, indicators: [["Shrub cover", 20, 20, 5.0, null], ["Invasive species cover", 5, 5, 5.0, null]] },
+        "All Strata Present":      { attribute: "Structural Diversity", score: 4.0, indicators: [["Cypress/Tupelo canopy", 75, 60, 4.0, null], ["Herbaceous groundcover", 10, 20, 4.0, null]] },
+        "All Trophic Levels":      { attribute: "Structural Diversity", score: 1.6, indicators: [["Characteristic primary producers (rating)", null, 1, 1.0, null], ["Characteristic primary consumers (rating)", null, 2, 2.0, null], ["Characteristic secondary consumers (rating)", null, 2, 2.0, null], ["Characteristic tertiary consumers/apex predators (rating)", null, 0, 0.0, null], ["Characteristic decomposers and detritivores (rating)", null, 3, 3.0, null]] },
+        "Spatial Mosaic":          { attribute: "Structural Diversity", score: 1.0, indicators: [["Wet/dry areas, longleaf pine density (rating)", null, 1, 1.0, null]] },
+        "Productivity/cycling":    { attribute: "Ecosystem Function", score: 2.5, indicators: [["Flooding frequency (per year)", 10, 5, 2.5, null]] },
+        "Habitat & Interactions":  { attribute: "Ecosystem Function", score: 3.6, indicators: [["Permanently flooded area (percent)", 70, 50, 3.6, null]] },
+        "Resilience/recruitment":  { attribute: "Ecosystem Function", score: 3.6, indicators: [["Cover of shrubs or invasive species", 5, 10, 4.0, null], ["Flooding duration (percent of growing season)", 80, 50, 3.1, null]] },
+        "Habitat Links":           { attribute: "External Exchanges", score: 2.5, indicators: [["Proportion of adjacent connected land with native habitat", 80, 40, 2.5, null]] },
+        "Gene Flows":              { attribute: "External Exchanges", score: 4.0, indicators: [["Lack of impediments to movement of species on/off site (rating)", null, 4, 4.0, null]] },
+        "Landscape Flows":         { attribute: "External Exchanges", score: 4.0, indicators: [["Animal movement corridors (rating)", null, 3, 3.0, null], ["Floodplain connection (rating)", null, 5, 5.0, null]] },
+        "Contamination":           { attribute: "Absence of Threats", score: 5.0, indicators: [["Lack of indicators of contamination (rating)", null, 5, 5.0, null]] },
+        "Invasive Species":        { attribute: "Absence of Threats", score: 4.0, indicators: [["Cover of invasive species", 5, 10, 4.0, null]] },
+        "Over-utilization":        { attribute: "Absence of Threats", score: 3.0, indicators: [["Road density (rating)", null, 3, 3.0, null], ["Use of site for non-habitat functions (rating)", null, 3, 3.0, null]] },
+        "Other Degradation Drivers":{ attribute: "Absence of Threats", score: 4.0, indicators: [["Storm or flood damage (rating)", null, 4, 4.0, null]] },
+        "Substrate Physical":      { attribute: "Physical Conditions", score: 4.0, indicators: [["Erosion, compaction, soil characteristics (rating)", null, 4, 4.0, null]] },
+        "Substrate Chemical":      { attribute: "Physical Conditions", score: 3.0, indicators: [["pH, salinity, nutrient levels, organic matter, bioindicators (rating)", null, 3, 3.0, null]] },
+        "Water chemo-physical":    { attribute: "Physical Conditions", score: 4.0, indicators: [["Water table/infiltration, turbidity, pH, DO (rating)", null, 4, 4.0, null]] }
+      }},
+      pine: { acres: 469.9, components: {
+        "Desirable Plants":        { attribute: "Species Composition", score: 3.1, indicators: [["Longleaf pine stems/acre", 100, 80, 4.0, "https://github.com/AB-Eco/SER-Dashboard/blob/1b4533c9cfbdf89964c53b1d68e57079e2fc9fab/extractedDocument.pdf"], ["Species richness of desirable herbaceous species", 200, 100, 2.5, null], ["Cover of desirable herbaceous species", 90, 50, 2.8, null]] },
+        "Desirable Animals":       { attribute: "Species Composition", score: 2.4, indicators: [["Bird species richness", 80, 45, 2.8, null], ["Bat species richness", 10, 7, 3.5, null], ["Reptile/amphibian species richness", 20, 5, 1.3, null], ["Small mammal species richness", 15, 6, 2.0, null]] },
+        "No Undesirable Species":  { attribute: "Species Composition", score: 1.0, indicators: [["Shrub cover", 5, 80, 1.0, null], ["Invasive species cover", 5, 30, 1.0, null]] },
+        "All Strata Present":      { attribute: "Structural Diversity", score: 2.3, indicators: [["Longleaf pine canopy", 30, 5, 0.8, null], ["Herbaceous groundcover", 95, 70, 3.7, null]] },
+        "All Trophic Levels":      { attribute: "Structural Diversity", score: 1.6, indicators: [["Characteristic primary producers (rating)", null, 1, 1.0, null], ["Characteristic primary consumers (rating)", null, 2, 2.0, null], ["Characteristic secondary consumers (rating)", null, 2, 2.0, null], ["Characteristic tertiary consumers/apex predators (rating)", null, 0, 0.0, null], ["Characteristic decomposers and detritivores (rating)", null, 3, 3.0, null]] },
+        "Spatial Mosaic":          { attribute: "Structural Diversity", score: 1.0, indicators: [["Wet/dry areas, longleaf pine density (rating)", null, 1, 1.0, null]] },
+        "Productivity/cycling":    { attribute: "Ecosystem Function", score: 2.0, indicators: [["Prescribed fire frequency (years since fire)", 3, 10, 2.0, null]] },
+        "Habitat & Interactions":  { attribute: "Ecosystem Function", score: 2.0, indicators: [["RCW nest trees per acre", 100, 5, 0.3, null], ["Herbaceous groundcover", 95, 70, 3.7, null]] },
+        "Resilience/recruitment":  { attribute: "Ecosystem Function", score: 2.7, indicators: [["Cover of shrubs or invasive species", 5, 90, 1.0, null], ["Desirable herbaceous species cover", 90, 50, 2.8, null], ["Longleaf pine seedlings per acre", 5, 10, 5.0, null], ["Prescribed fire frequency (years since fire)", 3, 10, 2.0, null]] },
+        "Habitat Links":           { attribute: "External Exchanges", score: 2.5, indicators: [["Proportion of adjacent connected land with native habitat", 80, 40, 2.5, null]] },
+        "Gene Flows":              { attribute: "External Exchanges", score: 4.0, indicators: [["Lack of impediments to movement of species on/off site (rating)", null, 4, 4.0, null]] },
+        "Landscape Flows":         { attribute: "External Exchanges", score: 4.0, indicators: [["Animal movement corridors (rating)", null, 3, 3.0, null], ["Floodplain connection (rating)", null, 5, 5.0, null]] },
+        "Contamination":           { attribute: "Absence of Threats", score: 5.0, indicators: [["Lack of indicators of contamination (rating)", null, 5, 5.0, null]] },
+        "Invasive Species":        { attribute: "Absence of Threats", score: 1.0, indicators: [["Cover of invasive species", 5, 30, 1.0, null]] },
+        "Over-utilization":        { attribute: "Absence of Threats", score: 2.5, indicators: [["Road density (rating)", null, 2, 2.0, null], ["Use of site for non-habitat functions (rating)", null, 3, 3.0, null]] },
+        "Other Degradation Drivers":{ attribute: "Absence of Threats", score: 1.0, indicators: [["Storm or flood damage (rating)", null, 1, 1.0, null]] },
+        "Substrate Physical":      { attribute: "Physical Conditions", score: 4.0, indicators: [["Erosion, compaction, soil characteristics (rating)", null, 4, 4.0, null]] },
+        "Substrate Chemical":      { attribute: "Physical Conditions", score: 3.0, indicators: [["pH, salinity, nutrient levels, organic matter, bioindicators (rating)", null, 3, 3.0, null]] },
+        "Water chemo-physical":    { attribute: "Physical Conditions", score: 3.0, indicators: [["Water table/infiltration, turbidity, pH, DO (rating)", null, 3, 3.0, null]] }
+      }}
+    }},
+    { year: "2026", habitats: {
+      cytu: { acres: 186.6, components: {
+        "Desirable Plants":        { attribute: "Species Composition", score: 3.5, indicators: [["Cypress or tupelo stems/acre", 200, 140, 3.5, null]] },
+        "Desirable Animals":       { attribute: "Species Composition", score: 3.0, indicators: [["Bird species richnes", 40, 22, 2.8, null], ["Bat species richness", 10, 7, 3.5, null], ["Reptile/amphibian species richness", 30, 15, 2.5, null], ["Small mammal species richness", 5, 3, 3.0, null]] },
+        "No Undesirable Species":  { attribute: "Species Composition", score: 5.0, indicators: [["Shrub cover", 20, 20, 5.0, null], ["Invasive species cover", 5, 2, 5.0, null]] },
+        "All Strata Present":      { attribute: "Structural Diversity", score: 3.8, indicators: [["Native shrub cover", 25, 15, 3.0, null], ["Cypress/Tupelo canopy", 75, 60, 4.0, null], ["Native shrub cover", 25, 20, 4.0, null], ["Herbaceous groundcover", 10, 20, 4.0, null]] },
+        "All Trophic Levels":      { attribute: "Structural Diversity", score: 1.6, indicators: [["Characteristic primary producers (rating)", null, 1, 1.0, null], ["Characteristic primary consumers (rating)", null, 2, 2.0, null], ["Characteristic secondary consumers (rating)", null, 2, 2.0, null], ["Characteristic tertiary consumers/apex predators (rating)", null, 0, 0.0, null], ["Characteristic decomposers and detritivores (rating)", null, 3, 3.0, null]] },
+        "Spatial Mosaic":          { attribute: "Structural Diversity", score: 1.0, indicators: [["Wet/dry areas, longleaf pine density (rating)", null, 1, 1.0, null]] },
+        "Productivity/cycling":    { attribute: "Ecosystem Function", score: 2.5, indicators: [["Flooding frequency (per year)", 10, 5, 2.5, null]] },
+        "Habitat & Interactions":  { attribute: "Ecosystem Function", score: 3.6, indicators: [["Permanently flooded area (percent)", 70, 50, 3.6, null]] },
+        "Resilience/recruitment":  { attribute: "Ecosystem Function", score: 3.1, indicators: [["Cover of shrubs or invasive species", 5, 3, 3.0, null], ["Flooding duration (percent of growing season)", 80, 50, 3.1, null]] },
+        "Habitat Links":           { attribute: "External Exchanges", score: 2.5, indicators: [["Proportion of adjacent connected land with native habitat", 80, 40, 2.5, null]] },
+        "Gene Flows":              { attribute: "External Exchanges", score: 4.0, indicators: [["Lack of impediments to movement of species on/off site (rating)", null, 4, 4.0, null]] },
+        "Landscape Flows":         { attribute: "External Exchanges", score: 4.0, indicators: [["Animal movement corridors (rating)", null, 3, 3.0, null], ["Floodplain connection (rating)", null, 5, 5.0, null]] },
+        "Contamination":           { attribute: "Absence of Threats", score: 5.0, indicators: [["Lack of indicators of contamination (rating)", null, 5, 5.0, null]] },
+        "Invasive Species":        { attribute: "Absence of Threats", score: 5.0, indicators: [["Cover of invasive species", 5, 3, 5.0, null]] },
+        "Over-utilization":        { attribute: "Absence of Threats", score: 3.0, indicators: [["Road density (rating)", null, 3, 3.0, null], ["Use of site for non-habitat functions (rating)", null, 3, 3.0, null]] },
+        "Other Degradation Drivers":{ attribute: "Absence of Threats", score: 4.0, indicators: [["Storm or flood damage (rating)", null, 4, 4.0, null]] },
+        "Substrate Physical":      { attribute: "Physical Conditions", score: 4.0, indicators: [["Erosion, compaction, soil characteristics (rating)", null, 4, 4.0, null]] },
+        "Substrate Chemical":      { attribute: "Physical Conditions", score: 3.0, indicators: [["pH, salinity, nutrient levels, organic matter, bioindicators (rating)", null, 3, 3.0, null]] },
+        "Water chemo-physical":    { attribute: "Physical Conditions", score: 4.0, indicators: [["Water table/infiltration, turbidity, pH, DO (rating)", null, 4, 4.0, null]] }
+      }},
+      pine: { acres: 469.9, components: {
+        "Desirable Plants":        { attribute: "Species Composition", score: 2.9, indicators: [["Longleaf pine stems/acre", 100, 90, 4.5, null], ["Species richness of desirable herbaceous species", 200, 70, 1.8, null], ["Cover of desirable herbaceous species", 90, 45, 2.5, null]] },
+        "Desirable Animals":       { attribute: "Species Composition", score: 3.7, indicators: [["Bird species richness", 80, 55, 3.4, null], ["Bat species richness", 10, 9, 4.5, null], ["Reptile/amphibian species richness", 20, 15, 3.8, null], ["Small mammal species richness", 15, 9, 3.0, null]] },
+        "No Undesirable Species":  { attribute: "Species Composition", score: 2.0, indicators: [["Shrub cover", 5, 1, 1.0, null], ["Invasive species cover", 5, 10, 3.0, null]] },
+        "All Strata Present":      { attribute: "Structural Diversity", score: 2.0, indicators: [["Longleaf pine canopy", 30, 8, 1.3, null], ["Herbaceous groundcover", 95, 50, 2.6, null]] },
+        "All Trophic Levels":      { attribute: "Structural Diversity", score: 2.6, indicators: [["Characteristic primary producers (rating)", null, 3, 3.0, null], ["Characteristic primary consumers (rating)", null, 3, 3.0, null], ["Characteristic secondary consumers (rating)", null, 3, 3.0, null], ["Characteristic tertiary consumers/apex predators (rating)", null, 1, 1.0, null], ["Characteristic decomposers and detritivores (rating)", null, 3, 3.0, null]] },
+        "Spatial Mosaic":          { attribute: "Structural Diversity", score: 2.0, indicators: [["Wet/dry areas, longleaf pine density (rating)", null, 2, 2.0, null]] },
+        "Productivity/cycling":    { attribute: "Ecosystem Function", score: 1.7, indicators: [["Prescribed fire frequency (years since fire)", 3, 1, 1.7, null]] },
+        "Habitat & Interactions":  { attribute: "Ecosystem Function", score: 1.5, indicators: [["RCW nest trees per acre", 100, 5, 0.3, null], ["Herbaceous groundcover", 95, 50, 2.6, null]] },
+        "Resilience/recruitment":  { attribute: "Ecosystem Function", score: 3.4, indicators: [["Cover of shrubs or invasive species", 5, 5, 5.0, null], ["Desirable herbaceous species cover", 90, 30, 1.7, null], ["Longleaf pine seedlings per acre", 5, 100, 5.0, null], ["Prescribed fire frequency (years since fire)", 3, 1, 1.7, null]] },
+        "Habitat Links":           { attribute: "External Exchanges", score: 2.5, indicators: [["Proportion of adjacent connected land with native habitat", 80, 40, 2.5, null]] },
+        "Gene Flows":              { attribute: "External Exchanges", score: 4.0, indicators: [["Lack of impediments to movement of species on/off site (rating)", null, 4, 4.0, null]] },
+        "Landscape Flows":         { attribute: "External Exchanges", score: 4.0, indicators: [["Animal movement corridors (rating)", null, 3, 3.0, null], ["Floodplain connection (rating)", null, 5, 5.0, null]] },
+        "Contamination":           { attribute: "Absence of Threats", score: 5.0, indicators: [["Lack of indicators of contamination (rating)", null, 5, 5.0, null]] },
+        "Invasive Species":        { attribute: "Absence of Threats", score: 4.0, indicators: [["Cover of invasive species", 5, 10, 4.0, null]] },
+        "Over-utilization":        { attribute: "Absence of Threats", score: 2.5, indicators: [["Road density (rating)", null, 2, 2.0, null], ["Use of site for non-habitat functions (rating)", null, 3, 3.0, null]] },
+        "Other Degradation Drivers":{ attribute: "Absence of Threats", score: 3.0, indicators: [["Storm or flood damage (rating)", null, 3, 3.0, null]] },
+        "Substrate Physical":      { attribute: "Physical Conditions", score: 4.0, indicators: [["Erosion, compaction, soil characteristics (rating)", null, 4, 4.0, null]] },
+        "Substrate Chemical":      { attribute: "Physical Conditions", score: 3.0, indicators: [["pH, salinity, nutrient levels, organic matter, bioindicators (rating)", null, 3, 3.0, null]] },
+        "Water chemo-physical":    { attribute: "Physical Conditions", score: 3.0, indicators: [["Water table/infiltration, turbidity, pH, DO (rating)", null, 3, 3.0, null]] }
+      }}
+    }},
+    { year: "2027", habitats: {} },
+    { year: "2028", habitats: {} },
+    { year: "2029", habitats: {} },
+    { year: "2030", habitats: {} },
+    { year: "2031", habitats: {} },
+    { year: "2032", habitats: {} }
+  ]
+};
+
+/* =====================================================================
+   CONFIG
+   ===================================================================== */
+const ATTR_COLOR = {
+  "Species Composition":  "var(--c-spec)",
+  "Structural Diversity": "var(--c-struct)",
+  "Ecosystem Function":   "var(--c-func)",
+  "External Exchanges":   "var(--c-exch)",
+  "Absence of Threats":   "var(--c-threat)",
+  "Physical Conditions":  "var(--c-phys)"
+};
+const ATTR_ORDER = ["Species Composition", "Structural Diversity", "Ecosystem Function",
+                    "External Exchanges", "Absence of Threats", "Physical Conditions"];
+/* Display labels shortened so 19 spokes stay legible */
+const SHORT = {
+  "No Undesirable Species": "No Undesirables",
+  "All Strata Present": "All Strata",
+  "All Trophic Levels": "Trophic Levels",
+  "Productivity/cycling": "Productivity",
+  "Habitat & Interactions": "Habitat/Interact.",
+  "Resilience/recruitment": "Resilience",
+  "Other Degradation Drivers": "Other Drivers",
+  "Substrate Physical": "Substrate Phys.",
+  "Substrate Chemical": "Substrate Chem.",
+  "Water chemo-physical": "Water chem-phys."
+};
+
+const CX = 310, CY = 315, R_HUB = 62, R_RIM = 245;
+const STAR_STEP = (R_RIM - R_HUB) / 5;
+const BASELINE_YEAR_INDEX = 0;
+
+const state = { yearIndex: 0, habitat: "all" };
+const svg = document.getElementById("wheel");
+const SVGNS = "http://www.w3.org/2000/svg";
+const tooltip = document.getElementById("tooltip");
+
+/* Years that actually contain assessed habitats (skip placeholder years) */
+function assessedYears() {
+  return DATA.years.map((y, i) => ({ y, i })).filter(o => Object.keys(o.y.habitats).length > 0);
+}
+
+function el(tag, attrs, parent) {
+  const node = document.createElementNS(SVGNS, tag);
+  for (const k in attrs) node.setAttribute(k, attrs[k]);
+  (parent || svg).appendChild(node);
+  return node;
+}
+function txt(x, y, str, attrs, parent) {
+  const t = el("text", Object.assign({ x, y }, attrs), parent);
+  t.textContent = str;
+  return t;
+}
+const rad = d => d * Math.PI / 180;
+const pt = (r, a) => `${CX + r * Math.cos(rad(a))},${CY + r * Math.sin(rad(a))}`;
+
+function wedgePath(r1, r2, a1, a2) {
+  const large = (a2 - a1) > 180 ? 1 : 0;
+  return `M ${pt(r2, a1)} A ${r2} ${r2} 0 ${large} 1 ${pt(r2, a2)}
+          L ${pt(r1, a2)} A ${r1} ${r1} 0 ${large} 0 ${pt(r1, a1)} Z`;
+}
+function arcPath(r, a1, a2) {
+  const large = (a2 - a1) > 180 ? 1 : 0;
+  return `M ${pt(r, a1)} A ${r} ${r} 0 ${large} 1 ${pt(r, a2)}`;
+}
+
+/* Component score in the current view ("all" = area-weighted average
+   of ASSESSED habitats only) */
+function compScore(yearIdx, compName) {
+  const y = DATA.years[yearIdx];
+  if (state.habitat !== "all") {
+    const h = y.habitats[state.habitat];
+    const c = h && h.components[compName];
+    return c ? c.score : null;
+  }
+  let num = 0, den = 0;
+  for (const hid in y.habitats) {
+    const c = y.habitats[hid].components[compName];
+    if (!c) continue;
+    num += y.habitats[hid].acres * c.score;
+    den += y.habitats[hid].acres;
+  }
+  return den ? num / den : null;
+}
+
+function coverage(yearIdx) {
+  const y = DATA.years[yearIdx];
+  let assessed = 0, total = 0;
+  for (const hid in DATA.habitatNames) {
+    const h = y.habitats[hid];
+    if (h) assessed += h.acres;
+    total += h ? h.acres : (DATA.totalAcres && DATA.totalAcres[hid]) || 0;
+  }
+  return { assessed, total };
+}
+
+/* Average of the 19 components per habitat, then area-weighted */
+function siteScore(yearIdx) {
+  const y = DATA.years[yearIdx];
+  let num = 0, den = 0;
+  for (const hid in y.habitats) {
+    const comps = y.habitats[hid].components;
+    const names = Object.keys(comps);
+    if (!names.length) continue;
+    const avg = names.reduce((s, n) => s + comps[n].score, 0) / names.length;
+    num += y.habitats[hid].acres * avg;
+    den += y.habitats[hid].acres;
+  }
+  return den ? num / den : null;
+}
+
+/* =====================================================================
+   DRAW
+   ===================================================================== */
+function drawWheel() {
+  svg.innerHTML = "";
+
+  // star reference rings
+  for (let s = 1; s <= 5; s++) {
+    el("circle", { cx: CX, cy: CY, r: R_HUB + s * STAR_STEP,
+      fill: "none", stroke: "#ccc", "stroke-dasharray": "3 4" });
+    // ring number along the 12 o'clock axis
+    txt(CX + 4, CY - R_HUB - s * STAR_STEP + 4, s,
+        { "font-size": 9, fill: "#999", "font-family": "sans-serif" });
+  }
+  el("circle", { cx: CX, cy: CY, r: R_HUB, fill: "#fffdf8", stroke: "#999" });
+
+  // spoke slots: components grouped by attribute, gap slot between groups
+  const byAttr = {};
+  for (const name of Object.keys(DATA.years[state.yearIndex].habitats.pine?.components ||
+                                  DATA.years[state.yearIndex].habitats[Object.keys(DATA.years[state.yearIndex].habitats)[0]].components)) {
+    const attr = Object.values(DATA.years[state.yearIndex].habitats)
+      .map(h => h.components[name]).filter(Boolean)[0].attribute;
+    (byAttr[attr] = byAttr[attr] || []).push(name);
+  }
+  const slots = [];
+  ATTR_ORDER.filter(a => byAttr[a]).forEach((attr, gi, arr) => {
+    byAttr[attr].forEach(n => slots.push(n));
+    if (gi < arr.length - 1) slots.push(null);
+  });
+
+  const SLOT_DEG = 360 / slots.length;
+  const GAP = 2.5; // degrees of breathing room inside each slot
+
+  slots.forEach((name, i) => {
+    if (name === null) return;
+    const a1 = -90 + i * SLOT_DEG;
+    const mid = a1 + SLOT_DEG / 2;
+    const comp0 = Object.values(DATA.years[state.yearIndex].habitats)
+      .map(h => h.components[name]).filter(Boolean)[0];
+    const color = ATTR_COLOR[comp0.attribute];
+    const score = compScore(state.yearIndex, name);
+    if (score === null) return;
+    const base = compScore(BASELINE_YEAR_INDEX, name);
+
+    // remainder wedge to the rim ("room left to recover")
+    el("path", { d: wedgePath(R_HUB, R_RIM, a1 + GAP, a1 + SLOT_DEG - GAP),
+      fill: "#eceae4", stroke: "#fff", "stroke-width": 1 });
+
+    // score wedge
+    const w = el("path", { d: wedgePath(R_HUB, R_HUB + score * STAR_STEP, a1 + GAP, a1 + SLOT_DEG - GAP),
+      fill: color, stroke: "#fff", "stroke-width": 1, cursor: "pointer" });
+
+    // baseline ghost
+    if (base !== null && base !== score && state.yearIndex !== BASELINE_YEAR_INDEX) {
+      el("path", { d: arcPath(R_HUB + base * STAR_STEP, a1 + GAP + 1, a1 + SLOT_DEG - GAP - 1),
+        fill: "none", stroke: "#444", "stroke-width": 1.8, "stroke-dasharray": "5 4" });
+    }
+
+    // interaction
+    const hit = [w];
+    hit.forEach(n => {
+      n.addEventListener("click", () => showDetail(name));
+      n.addEventListener("mousemove", ev => showTip(ev,
+        `<strong>${SHORT[name] || name}</strong><br>${comp0.attribute}<br>Score: ${score.toFixed(1)} ★` +
+        (base !== null ? `<br>Baseline: ${base.toFixed(1)} ★` : "")));
+      n.addEventListener("mouseleave", hideTip);
+    });
+
+    // outer label + score
+    const lr = R_RIM + 12;
+    const lx = CX + lr * Math.cos(rad(mid)), ly = CY + lr * Math.sin(rad(mid));
+    const c = Math.cos(rad(mid));
+    const anchor = Math.abs(c) < 0.35 ? "middle" : (c > 0 ? "start" : "end");
+    const lab = SHORT[name] || name;
+    const t1 = txt(lx, ly, lab,
+      { "text-anchor": anchor, "font-size": 10.5, "font-family": "Georgia, serif", fill: "#2b2b33", cursor: "pointer" });
+    const t2 = txt(lx, ly + 12, score.toFixed(1) + " ★",
+      { "text-anchor": anchor, "font-size": 10.5, "font-weight": "bold", fill: color, cursor: "pointer" });
+    [t1, t2].forEach(n => {
+      n.addEventListener("click", () => showDetail(name));
+      n.addEventListener("mousemove", ev => showTip(ev, `<strong>${lab}</strong><br>Score: ${score.toFixed(1)} ★`));
+      n.addEventListener("mouseleave", hideTip);
+    });
+  });
+
+  // hub: site score + coverage
+  const sc = siteScore(state.yearIndex);
+  txt(CX, CY - 8, sc === null ? "–" : sc.toFixed(2),
+      { "text-anchor": "middle", "font-size": 20, "font-weight": "bold", fill: "#2b2b33" });
+  const cov = coverage(state.yearIndex);
+  const covTxt = cov.total && cov.assessed < cov.total
+    ? `covers ${cov.assessed.toFixed(0)} of ${cov.total.toFixed(0)} acres`
+    : (state.habitat === "all" ? "site score" : DATA.habitatNames[state.habitat]);
+  txt(CX, CY + 12, state.habitat === "all" ? covTxt : DATA.habitatNames[state.habitat],
+      { "text-anchor": "middle", "font-size": 9.5, fill: "#666" });
+  txt(CX, CY + 26, state.habitat === "all" && cov.assessed < cov.total
+      ? `(${Math.round(100 * cov.assessed / cov.total)}% of site area)`
+      : "", { "text-anchor": "middle", "font-size": 9.5, fill: "#666" });
+}
+
+/* =====================================================================
+   TOOLTIP
+   ===================================================================== */
+function showTip(ev, html) {
+  tooltip.innerHTML = html;
+  tooltip.style.display = "block";
+  const pad = 12;
+  tooltip.style.left = Math.min(ev.clientX + pad, window.innerWidth - 250) + "px";
+  tooltip.style.top = (ev.clientY + pad) + "px";
+}
+function hideTip() { tooltip.style.display = "none"; }
+
+/* =====================================================================
+   DETAIL PANEL
+   ===================================================================== */
+function fmt(v) {
+  return (v === null || v === undefined) ? "—" : v;
+}
+function showDetail(compName) {
+  const y = DATA.years[state.yearIndex];
+  const habitatId = state.habitat === "all"
+    ? Object.keys(y.habitats)[0]   // show first assessed habitat when in "all" view
+    : state.habitat;
+  const comp = y.habitats[habitatId] && y.habitats[habitatId].components[compName];
+  if (!comp) return;
+
+  const color = ATTR_COLOR[comp.attribute];
+  let rows = "";
+  comp.indicators.forEach(ind => {
+    const [iname, ref, val, stars, url] = ind;
+    const link = url ? `<a href="${url}" target="_blank" rel="noopener">datasheet</a>` : "—";
+    rows += `<tr><td>${iname}</td><td>${fmt(ref)}</td><td>${fmt(val)}</td><td><strong>${fmt(stars)}</strong></td><td>${link}</td></tr>`;
+  });
+
+  // score across assessed years for context
+  const hist = assessedYears().map(o => {
+    const s = compScore(o.i, compName);
+    return s === null ? "" : `${o.y.year}: <strong>${s.toFixed(1)}</strong>`;
+  }).filter(Boolean).join(" &nbsp;·&nbsp; ");
+
+  const habNote = state.habitat === "all"
+    ? `<p class="hint" style="margin:0.2rem 0">Showing indicators for ${DATA.habitatNames[habitatId]} (component score is the area-weighted average across assessed habitats).</p>`
+    : "";
+
+  document.getElementById("detailPanel").innerHTML = `
+    <div class="attr-tag" style="color:${color}">${comp.attribute}</div>
+    <h2>${compName}</h2>
+    ${habNote}
+    <p style="font-size:0.88rem;margin:0.4rem 0">Component score by year — ${hist}</p>
+    <table>
+      <thead><tr><th>Indicator</th><th>Reference</th><th>Value</th><th>★</th><th>Datasheet</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+  `;
+}
+
+/* =====================================================================
+   CONTROLS
+   ===================================================================== */
+function buildControls() {
+  const sel = document.getElementById("year");
+  sel.innerHTML = "";
+  assessedYears().forEach(o => {
+    const opt = document.createElement("option");
+    opt.value = o.i; opt.textContent = o.y.year;
+    sel.appendChild(opt);
+  });
+  if (!assessedYears().some(o => o.i === state.yearIndex)) state.yearIndex = assessedYears()[0].i;
+  sel.value = state.yearIndex;
+  sel.addEventListener("change", () => { state.yearIndex = +sel.value; drawWheel(); });
+
+  const toggle = document.getElementById("habitatToggle");
+  toggle.innerHTML = "";
+  // only offer habitats that are assessed in the selected year's dataset
+  const assessedIds = new Set();
+  DATA.years.forEach(y => Object.keys(y.habitats).forEach(h => assessedIds.add(h)));
+  [["all", "Whole site"]].concat(
+    Object.entries(DATA.habitatNames).filter(([id]) => assessedIds.has(id))
+  ).forEach(([key, label]) => {
+    const b = document.createElement("button");
+    b.textContent = label;
+    if (key === state.habitat) b.classList.add("active");
+    b.addEventListener("click", () => {
+      state.habitat = key;
+      toggle.querySelectorAll("button").forEach(x => x.classList.toggle("active", x === b));
+      drawWheel();
+    });
+    toggle.appendChild(b);
+  });
+}
+
+function buildLegend() {
+  document.getElementById("legend").innerHTML = ATTR_ORDER
+    .map(a => `<span style="--dot:${ATTR_COLOR[a]}">${a}</span>`).join("");
+}
+
+window.addEventListener("resize", () => drawWheel());
+
+loadData();
+function init() {
+  state.yearIndex = assessedYears()[assessedYears().length - 1].i;
+  buildLegend();
+  buildControls();
+  drawWheel();
+  showDetail("Desirable Plants");
+}
+</script>
+</body>
+</html>

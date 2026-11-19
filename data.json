@@ -1,0 +1,1473 @@
+{
+  "habitatNames": {
+    "bhsw": "Bayhead Swamp",
+    "hwfo": "Hardwood Forest",
+    "cytu": "Cypress Tupelo Swamp",
+    "cane": "Rivercane Grassland",
+    "pine": "Longleaf Pine Savanna"
+  },
+  "years": [
+    {
+      "year": "2025",
+      "habitats": {
+        "cytu": {
+          "acres": 186.6,
+          "components": {
+            "Desirable Plants": {
+              "attribute": "Species Composition",
+              "score": 3.3,
+              "indicators": [
+                {
+                  "indicator": "Cypress or tupelo stems/acre",
+                  "reference_value": 200.0,
+                  "value": 130,
+                  "star_score": 3.3,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "Desirable Animals": {
+              "attribute": "Species Composition",
+              "score": 2.6,
+              "indicators": [
+                {
+                  "indicator": "Bird species richness",
+                  "reference_value": 40.0,
+                  "value": 20,
+                  "star_score": 2.5,
+                  "datasheet_url": null
+                },
+                {
+                  "indicator": "Bat species richness",
+                  "reference_value": 10.0,
+                  "value": 8,
+                  "star_score": 4.0,
+                  "datasheet_url": null
+                },
+                {
+                  "indicator": "Reptile/amphibian species richness",
+                  "reference_value": 30.0,
+                  "value": 18,
+                  "star_score": 3.0,
+                  "datasheet_url": null
+                },
+                {
+                  "indicator": "Small mammal species richness",
+                  "reference_value": 5.0,
+                  "value": 1,
+                  "star_score": 1.0,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "No Undesirable Species": {
+              "attribute": "Species Composition",
+              "score": 5.0,
+              "indicators": [
+                {
+                  "indicator": "Shrub cover",
+                  "reference_value": 20.0,
+                  "value": 20,
+                  "star_score": 5.0,
+                  "datasheet_url": null
+                },
+                {
+                  "indicator": "Invasive species cover",
+                  "reference_value": 5.0,
+                  "value": 5,
+                  "star_score": 5.0,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "All Strata Present": {
+              "attribute": "Structural Diversity",
+              "score": 3.7,
+              "indicators": [
+                {
+                  "indicator": "Cypress/Tupelo canopy",
+                  "reference_value": 75.0,
+                  "value": 60,
+                  "star_score": 4.0,
+                  "datasheet_url": null
+                },
+                {
+                  "indicator": "Native shrub cover",
+                  "reference_value": 25.0,
+                  "value": 15,
+                  "star_score": 3.0,
+                  "datasheet_url": null
+                },
+                {
+                  "indicator": "Herbaceous groundcover",
+                  "reference_value": 10.0,
+                  "value": 20,
+                  "star_score": 4.0,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "All Trophic Levels": {
+              "attribute": "Structural Diversity",
+              "score": 1.6,
+              "indicators": [
+                {
+                  "indicator": "Characteristic primary producers (rating)",
+                  "reference_value": null,
+                  "value": 1,
+                  "star_score": 1.0,
+                  "datasheet_url": null
+                },
+                {
+                  "indicator": "Characteristic primary consumers (rating)",
+                  "reference_value": null,
+                  "value": 2,
+                  "star_score": 2.0,
+                  "datasheet_url": null
+                },
+                {
+                  "indicator": "Characteristic secondary consumers (rating)",
+                  "reference_value": null,
+                  "value": 2,
+                  "star_score": 2.0,
+                  "datasheet_url": null
+                },
+                {
+                  "indicator": "Characteristic tertiary consumers/apex predators (rating)",
+                  "reference_value": null,
+                  "value": 0,
+                  "star_score": 0.0,
+                  "datasheet_url": null
+                },
+                {
+                  "indicator": "Characteristic decomposers and detritivores (rating)",
+                  "reference_value": null,
+                  "value": 3,
+                  "star_score": 3.0,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "Spatial Mosaic": {
+              "attribute": "Structural Diversity",
+              "score": 1.0,
+              "indicators": [
+                {
+                  "indicator": "Wet/dry areas, longleaf pine density (rating)",
+                  "reference_value": null,
+                  "value": 1,
+                  "star_score": 1.0,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "Productivity/cycling": {
+              "attribute": "Ecosystem Function",
+              "score": 2.5,
+              "indicators": [
+                {
+                  "indicator": "Flooding frequency (per year)",
+                  "reference_value": 10.0,
+                  "value": 5,
+                  "star_score": 2.5,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "Habitat & Interactions": {
+              "attribute": "Ecosystem Function",
+              "score": 3.6,
+              "indicators": [
+                {
+                  "indicator": "Permanently flooded area (percent)",
+                  "reference_value": 70.0,
+                  "value": 50,
+                  "star_score": 3.6,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "Resilience/recruitment": {
+              "attribute": "Ecosystem Function",
+              "score": 3.6,
+              "indicators": [
+                {
+                  "indicator": "Cover of shrubs or invasive species",
+                  "reference_value": 5.0,
+                  "value": 10,
+                  "star_score": 4.0,
+                  "datasheet_url": null
+                },
+                {
+                  "indicator": "Flooding duration (percent of growing season)",
+                  "reference_value": 80.0,
+                  "value": 50,
+                  "star_score": 3.1,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "Habitat Links": {
+              "attribute": "External Exchanges",
+              "score": 2.5,
+              "indicators": [
+                {
+                  "indicator": "Proportion of adjacent connected land with native habitat",
+                  "reference_value": 80.0,
+                  "value": 40,
+                  "star_score": 2.5,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "Gene Flows": {
+              "attribute": "External Exchanges",
+              "score": 4.0,
+              "indicators": [
+                {
+                  "indicator": "Lack of impediments to movement of species on/off site (rating)",
+                  "reference_value": null,
+                  "value": 4,
+                  "star_score": 4.0,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "Landscape Flows": {
+              "attribute": "External Exchanges",
+              "score": 4.0,
+              "indicators": [
+                {
+                  "indicator": "Animal movement corridors (rating)",
+                  "reference_value": null,
+                  "value": 3,
+                  "star_score": 3.0,
+                  "datasheet_url": null
+                },
+                {
+                  "indicator": "Floodplain connection (rating)",
+                  "reference_value": null,
+                  "value": 5,
+                  "star_score": 5.0,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "Contamination": {
+              "attribute": "Absence of Threats",
+              "score": 5.0,
+              "indicators": [
+                {
+                  "indicator": "Lack of indicators of contamination (rating)",
+                  "reference_value": null,
+                  "value": 5,
+                  "star_score": 5.0,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "Invasive Species": {
+              "attribute": "Absence of Threats",
+              "score": 4.0,
+              "indicators": [
+                {
+                  "indicator": "Cover of invasive species",
+                  "reference_value": 5.0,
+                  "value": 10,
+                  "star_score": 4.0,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "Over-utilization": {
+              "attribute": "Absence of Threats",
+              "score": 3.0,
+              "indicators": [
+                {
+                  "indicator": "Road density (rating)",
+                  "reference_value": null,
+                  "value": 3,
+                  "star_score": 3.0,
+                  "datasheet_url": null
+                },
+                {
+                  "indicator": "Use of site for non-habitat functions (rating)",
+                  "reference_value": null,
+                  "value": 3,
+                  "star_score": 3.0,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "Other Degradation Drivers": {
+              "attribute": "Absence of Threats",
+              "score": 4.0,
+              "indicators": [
+                {
+                  "indicator": "Storm or flood damage (rating)",
+                  "reference_value": null,
+                  "value": 4,
+                  "star_score": 4.0,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "Substrate Physical": {
+              "attribute": "Physical Conditions",
+              "score": 4.0,
+              "indicators": [
+                {
+                  "indicator": "Erosion, compaction, soil characteristics (rating)",
+                  "reference_value": null,
+                  "value": 4,
+                  "star_score": 4.0,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "Substrate Chemical": {
+              "attribute": "Physical Conditions",
+              "score": 3.0,
+              "indicators": [
+                {
+                  "indicator": "pH, salinity, nutrient levels, organic matter, bioindicators (rating)",
+                  "reference_value": null,
+                  "value": 3,
+                  "star_score": 3.0,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "Water chemo-physical": {
+              "attribute": "Physical Conditions",
+              "score": 4.0,
+              "indicators": [
+                {
+                  "indicator": "Water table/infiltration, turbidity, pH, DO (rating)",
+                  "reference_value": null,
+                  "value": 4,
+                  "star_score": 4.0,
+                  "datasheet_url": null
+                }
+              ]
+            }
+          }
+        },
+        "pine": {
+          "acres": 469.9,
+          "components": {
+            "Desirable Plants": {
+              "attribute": "Species Composition",
+              "score": 3.1,
+              "indicators": [
+                {
+                  "indicator": "Longleaf pine stems/acre",
+                  "reference_value": 100.0,
+                  "value": 80,
+                  "star_score": 4.0,
+                  "datasheet_url": "https://github.com/AB-Eco/SER-Dashboard/blob/1b4533c9cfbdf89964c53b1d68e57079e2fc9fab/extractedDocument.pdf"
+                },
+                {
+                  "indicator": "Species richness of desirable herbaceous species",
+                  "reference_value": 200.0,
+                  "value": 100,
+                  "star_score": 2.5,
+                  "datasheet_url": null
+                },
+                {
+                  "indicator": "Cover of desirable herbaceous species",
+                  "reference_value": 90.0,
+                  "value": 50,
+                  "star_score": 2.8,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "Desirable Animals": {
+              "attribute": "Species Composition",
+              "score": 2.4,
+              "indicators": [
+                {
+                  "indicator": "Bird species richness",
+                  "reference_value": 80.0,
+                  "value": 45,
+                  "star_score": 2.8,
+                  "datasheet_url": null
+                },
+                {
+                  "indicator": "Bat species richness",
+                  "reference_value": 10.0,
+                  "value": 7,
+                  "star_score": 3.5,
+                  "datasheet_url": null
+                },
+                {
+                  "indicator": "Reptile/amphibian species richness",
+                  "reference_value": 20.0,
+                  "value": 5,
+                  "star_score": 1.3,
+                  "datasheet_url": null
+                },
+                {
+                  "indicator": "Small mammal species richness",
+                  "reference_value": 15.0,
+                  "value": 6,
+                  "star_score": 2.0,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "No Undesirable Species": {
+              "attribute": "Species Composition",
+              "score": 1.0,
+              "indicators": [
+                {
+                  "indicator": "Shrub cover",
+                  "reference_value": 5.0,
+                  "value": 80,
+                  "star_score": 1.0,
+                  "datasheet_url": null
+                },
+                {
+                  "indicator": "Invasive species cover",
+                  "reference_value": 5.0,
+                  "value": 30,
+                  "star_score": 1.0,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "All Strata Present": {
+              "attribute": "Structural Diversity",
+              "score": 2.3,
+              "indicators": [
+                {
+                  "indicator": "Longleaf pine canopy",
+                  "reference_value": 30.0,
+                  "value": 5,
+                  "star_score": 0.8,
+                  "datasheet_url": null
+                },
+                {
+                  "indicator": "Herbaceous groundcover",
+                  "reference_value": 95.0,
+                  "value": 70,
+                  "star_score": 3.7,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "All Trophic Levels": {
+              "attribute": "Structural Diversity",
+              "score": 1.6,
+              "indicators": [
+                {
+                  "indicator": "Characteristic primary producers (rating)",
+                  "reference_value": null,
+                  "value": 1,
+                  "star_score": 1.0,
+                  "datasheet_url": null
+                },
+                {
+                  "indicator": "Characteristic primary consumers (rating)",
+                  "reference_value": null,
+                  "value": 2,
+                  "star_score": 2.0,
+                  "datasheet_url": null
+                },
+                {
+                  "indicator": "Characteristic secondary consumers (rating)",
+                  "reference_value": null,
+                  "value": 2,
+                  "star_score": 2.0,
+                  "datasheet_url": null
+                },
+                {
+                  "indicator": "Characteristic tertiary consumers/apex predators (rating)",
+                  "reference_value": null,
+                  "value": 0,
+                  "star_score": 0.0,
+                  "datasheet_url": null
+                },
+                {
+                  "indicator": "Characteristic decomposers and detritivores (rating)",
+                  "reference_value": null,
+                  "value": 3,
+                  "star_score": 3.0,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "Spatial Mosaic": {
+              "attribute": "Structural Diversity",
+              "score": 1.0,
+              "indicators": [
+                {
+                  "indicator": "Wet/dry areas, longleaf pine density (rating)",
+                  "reference_value": null,
+                  "value": 1,
+                  "star_score": 1.0,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "Productivity/cycling": {
+              "attribute": "Ecosystem Function",
+              "score": 2.0,
+              "indicators": [
+                {
+                  "indicator": "Prescribed fire frequency (years since fire)",
+                  "reference_value": 3.0,
+                  "value": 10,
+                  "star_score": 2.0,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "Habitat & Interactions": {
+              "attribute": "Ecosystem Function",
+              "score": 2.0,
+              "indicators": [
+                {
+                  "indicator": "RCW nest trees per acre",
+                  "reference_value": 100.0,
+                  "value": 5,
+                  "star_score": 0.3,
+                  "datasheet_url": null
+                },
+                {
+                  "indicator": "Herbaceous groundcover",
+                  "reference_value": 95.0,
+                  "value": 70,
+                  "star_score": 3.7,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "Resilience/recruitment": {
+              "attribute": "Ecosystem Function",
+              "score": 2.7,
+              "indicators": [
+                {
+                  "indicator": "Cover of shrubs or invasive species",
+                  "reference_value": 5.0,
+                  "value": 90,
+                  "star_score": 1.0,
+                  "datasheet_url": null
+                },
+                {
+                  "indicator": "Desirable herbaceous species cover",
+                  "reference_value": 90.0,
+                  "value": 50,
+                  "star_score": 2.8,
+                  "datasheet_url": null
+                },
+                {
+                  "indicator": "Longleaf pine seedlings per acre",
+                  "reference_value": 5.0,
+                  "value": 10,
+                  "star_score": 5.0,
+                  "datasheet_url": null
+                },
+                {
+                  "indicator": "Prescribed fire frequency (years since fire)",
+                  "reference_value": 3.0,
+                  "value": 10,
+                  "star_score": 2.0,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "Habitat Links": {
+              "attribute": "External Exchanges",
+              "score": 2.5,
+              "indicators": [
+                {
+                  "indicator": "Proportion of adjacent connected land with native habitat",
+                  "reference_value": 80.0,
+                  "value": 40,
+                  "star_score": 2.5,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "Gene Flows": {
+              "attribute": "External Exchanges",
+              "score": 4.0,
+              "indicators": [
+                {
+                  "indicator": "Lack of impediments to movement of species on/off site (rating)",
+                  "reference_value": null,
+                  "value": 4,
+                  "star_score": 4.0,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "Landscape Flows": {
+              "attribute": "External Exchanges",
+              "score": 4.0,
+              "indicators": [
+                {
+                  "indicator": "Animal movement corridors (rating)",
+                  "reference_value": null,
+                  "value": 3,
+                  "star_score": 3.0,
+                  "datasheet_url": null
+                },
+                {
+                  "indicator": "Floodplain connection (rating)",
+                  "reference_value": null,
+                  "value": 5,
+                  "star_score": 5.0,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "Contamination": {
+              "attribute": "Absence of Threats",
+              "score": 5.0,
+              "indicators": [
+                {
+                  "indicator": "Lack of indicators of contamination (rating)",
+                  "reference_value": null,
+                  "value": 5,
+                  "star_score": 5.0,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "Invasive Species": {
+              "attribute": "Absence of Threats",
+              "score": 1.0,
+              "indicators": [
+                {
+                  "indicator": "Cover of invasive species",
+                  "reference_value": 5.0,
+                  "value": 30,
+                  "star_score": 1.0,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "Over-utilization": {
+              "attribute": "Absence of Threats",
+              "score": 2.5,
+              "indicators": [
+                {
+                  "indicator": "Road density (rating)",
+                  "reference_value": null,
+                  "value": 2,
+                  "star_score": 2.0,
+                  "datasheet_url": null
+                },
+                {
+                  "indicator": "Use of site for non-habitat functions (rating)",
+                  "reference_value": null,
+                  "value": 3,
+                  "star_score": 3.0,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "Other Degradation Drivers": {
+              "attribute": "Absence of Threats",
+              "score": 1.0,
+              "indicators": [
+                {
+                  "indicator": "Storm or flood damage (rating)",
+                  "reference_value": null,
+                  "value": 1,
+                  "star_score": 1.0,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "Substrate Physical": {
+              "attribute": "Physical Conditions",
+              "score": 4.0,
+              "indicators": [
+                {
+                  "indicator": "Erosion, compaction, soil characteristics (rating)",
+                  "reference_value": null,
+                  "value": 4,
+                  "star_score": 4.0,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "Substrate Chemical": {
+              "attribute": "Physical Conditions",
+              "score": 3.0,
+              "indicators": [
+                {
+                  "indicator": "pH, salinity, nutrient levels, organic matter, bioindicators (rating)",
+                  "reference_value": null,
+                  "value": 3,
+                  "star_score": 3.0,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "Water chemo-physical": {
+              "attribute": "Physical Conditions",
+              "score": 3.0,
+              "indicators": [
+                {
+                  "indicator": "Water table/infiltration, turbidity, pH, DO (rating)",
+                  "reference_value": null,
+                  "value": 3,
+                  "star_score": 3.0,
+                  "datasheet_url": null
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "year": "2026",
+      "habitats": {
+        "cytu": {
+          "acres": 186.6,
+          "components": {
+            "Desirable Plants": {
+              "attribute": "Species Composition",
+              "score": 3.5,
+              "indicators": [
+                {
+                  "indicator": "Cypress or tupelo stems/acre",
+                  "reference_value": 200.0,
+                  "value": 140,
+                  "star_score": 3.5,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "Desirable Animals": {
+              "attribute": "Species Composition",
+              "score": 3.0,
+              "indicators": [
+                {
+                  "indicator": "Bird species richness",
+                  "reference_value": 40.0,
+                  "value": 22,
+                  "star_score": 2.8,
+                  "datasheet_url": null
+                },
+                {
+                  "indicator": "Bat species richness",
+                  "reference_value": 10.0,
+                  "value": 7,
+                  "star_score": 3.5,
+                  "datasheet_url": null
+                },
+                {
+                  "indicator": "Reptile/amphibian species richness",
+                  "reference_value": 30.0,
+                  "value": 15,
+                  "star_score": 2.5,
+                  "datasheet_url": null
+                },
+                {
+                  "indicator": "Small mammal species richness",
+                  "reference_value": 5.0,
+                  "value": 3,
+                  "star_score": 3.0,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "No Undesirable Species": {
+              "attribute": "Species Composition",
+              "score": 5.0,
+              "indicators": [
+                {
+                  "indicator": "Shrub cover",
+                  "reference_value": 20.0,
+                  "value": 20,
+                  "star_score": 5.0,
+                  "datasheet_url": null
+                },
+                {
+                  "indicator": "Invasive species cover",
+                  "reference_value": 5.0,
+                  "value": 2,
+                  "star_score": 5.0,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "All Strata Present": {
+              "attribute": "Structural Diversity",
+              "score": 4.0,
+              "indicators": [
+                {
+                  "indicator": "Cypress/Tupelo canopy",
+                  "reference_value": 75.0,
+                  "value": 60,
+                  "star_score": 4.0,
+                  "datasheet_url": null
+                },
+                {
+                  "indicator": "Native shrub cover",
+                  "reference_value": 25.0,
+                  "value": 20,
+                  "star_score": 4.0,
+                  "datasheet_url": null
+                },
+                {
+                  "indicator": "Herbaceous groundcover",
+                  "reference_value": 10.0,
+                  "value": 20,
+                  "star_score": 4.0,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "All Trophic Levels": {
+              "attribute": "Structural Diversity",
+              "score": 1.6,
+              "indicators": [
+                {
+                  "indicator": "Characteristic primary producers (rating)",
+                  "reference_value": null,
+                  "value": 1,
+                  "star_score": 1.0,
+                  "datasheet_url": null
+                },
+                {
+                  "indicator": "Characteristic primary consumers (rating)",
+                  "reference_value": null,
+                  "value": 2,
+                  "star_score": 2.0,
+                  "datasheet_url": null
+                },
+                {
+                  "indicator": "Characteristic secondary consumers (rating)",
+                  "reference_value": null,
+                  "value": 2,
+                  "star_score": 2.0,
+                  "datasheet_url": null
+                },
+                {
+                  "indicator": "Characteristic tertiary consumers/apex predators (rating)",
+                  "reference_value": null,
+                  "value": 0,
+                  "star_score": 0.0,
+                  "datasheet_url": null
+                },
+                {
+                  "indicator": "Characteristic decomposers and detritivores (rating)",
+                  "reference_value": null,
+                  "value": 3,
+                  "star_score": 3.0,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "Spatial Mosaic": {
+              "attribute": "Structural Diversity",
+              "score": 1.0,
+              "indicators": [
+                {
+                  "indicator": "Wet/dry areas, longleaf pine density (rating)",
+                  "reference_value": null,
+                  "value": 1,
+                  "star_score": 1.0,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "Productivity/cycling": {
+              "attribute": "Ecosystem Function",
+              "score": 2.5,
+              "indicators": [
+                {
+                  "indicator": "Flooding frequency (per year)",
+                  "reference_value": 10.0,
+                  "value": 5,
+                  "star_score": 2.5,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "Habitat & Interactions": {
+              "attribute": "Ecosystem Function",
+              "score": 3.6,
+              "indicators": [
+                {
+                  "indicator": "Permanently flooded area (percent)",
+                  "reference_value": 70.0,
+                  "value": 50,
+                  "star_score": 3.6,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "Resilience/recruitment": {
+              "attribute": "Ecosystem Function",
+              "score": 3.1,
+              "indicators": [
+                {
+                  "indicator": "Cover of shrubs or invasive species",
+                  "reference_value": 5.0,
+                  "value": 3,
+                  "star_score": 3.0,
+                  "datasheet_url": null
+                },
+                {
+                  "indicator": "Flooding duration (percent of growing season)",
+                  "reference_value": 80.0,
+                  "value": 50,
+                  "star_score": 3.1,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "Habitat Links": {
+              "attribute": "External Exchanges",
+              "score": 2.5,
+              "indicators": [
+                {
+                  "indicator": "Proportion of adjacent connected land with native habitat",
+                  "reference_value": 80.0,
+                  "value": 40,
+                  "star_score": 2.5,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "Gene Flows": {
+              "attribute": "External Exchanges",
+              "score": 4.0,
+              "indicators": [
+                {
+                  "indicator": "Lack of impediments to movement of species on/off site (rating)",
+                  "reference_value": null,
+                  "value": 4,
+                  "star_score": 4.0,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "Landscape Flows": {
+              "attribute": "External Exchanges",
+              "score": 4.0,
+              "indicators": [
+                {
+                  "indicator": "Animal movement corridors (rating)",
+                  "reference_value": null,
+                  "value": 3,
+                  "star_score": 3.0,
+                  "datasheet_url": null
+                },
+                {
+                  "indicator": "Floodplain connection (rating)",
+                  "reference_value": null,
+                  "value": 5,
+                  "star_score": 5.0,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "Contamination": {
+              "attribute": "Absence of Threats",
+              "score": 5.0,
+              "indicators": [
+                {
+                  "indicator": "Lack of indicators of contamination (rating)",
+                  "reference_value": null,
+                  "value": 5,
+                  "star_score": 5.0,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "Invasive Species": {
+              "attribute": "Absence of Threats",
+              "score": 5.0,
+              "indicators": [
+                {
+                  "indicator": "Cover of invasive species",
+                  "reference_value": 5.0,
+                  "value": 3,
+                  "star_score": 5.0,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "Over-utilization": {
+              "attribute": "Absence of Threats",
+              "score": 3.0,
+              "indicators": [
+                {
+                  "indicator": "Road density (rating)",
+                  "reference_value": null,
+                  "value": 3,
+                  "star_score": 3.0,
+                  "datasheet_url": null
+                },
+                {
+                  "indicator": "Use of site for non-habitat functions (rating)",
+                  "reference_value": null,
+                  "value": 3,
+                  "star_score": 3.0,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "Other Degradation Drivers": {
+              "attribute": "Absence of Threats",
+              "score": 4.0,
+              "indicators": [
+                {
+                  "indicator": "Storm or flood damage (rating)",
+                  "reference_value": null,
+                  "value": 4,
+                  "star_score": 4.0,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "Substrate Physical": {
+              "attribute": "Physical Conditions",
+              "score": 4.0,
+              "indicators": [
+                {
+                  "indicator": "Erosion, compaction, soil characteristics (rating)",
+                  "reference_value": null,
+                  "value": 4,
+                  "star_score": 4.0,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "Substrate Chemical": {
+              "attribute": "Physical Conditions",
+              "score": 3.0,
+              "indicators": [
+                {
+                  "indicator": "pH, salinity, nutrient levels, organic matter, bioindicators (rating)",
+                  "reference_value": null,
+                  "value": 3,
+                  "star_score": 3.0,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "Water chemo-physical": {
+              "attribute": "Physical Conditions",
+              "score": 4.0,
+              "indicators": [
+                {
+                  "indicator": "Water table/infiltration, turbidity, pH, DO (rating)",
+                  "reference_value": null,
+                  "value": 4,
+                  "star_score": 4.0,
+                  "datasheet_url": null
+                }
+              ]
+            }
+          }
+        },
+        "pine": {
+          "acres": 469.9,
+          "components": {
+            "Desirable Plants": {
+              "attribute": "Species Composition",
+              "score": 2.9,
+              "indicators": [
+                {
+                  "indicator": "Longleaf pine stems/acre",
+                  "reference_value": 100.0,
+                  "value": 90,
+                  "star_score": 4.5,
+                  "datasheet_url": null
+                },
+                {
+                  "indicator": "Species richness of desirable herbaceous species",
+                  "reference_value": 200.0,
+                  "value": 70,
+                  "star_score": 1.8,
+                  "datasheet_url": null
+                },
+                {
+                  "indicator": "Cover of desirable herbaceous species",
+                  "reference_value": 90.0,
+                  "value": 45,
+                  "star_score": 2.5,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "Desirable Animals": {
+              "attribute": "Species Composition",
+              "score": 3.7,
+              "indicators": [
+                {
+                  "indicator": "Bird species richness",
+                  "reference_value": 80.0,
+                  "value": 55,
+                  "star_score": 3.4,
+                  "datasheet_url": null
+                },
+                {
+                  "indicator": "Bat species richness",
+                  "reference_value": 10.0,
+                  "value": 9,
+                  "star_score": 4.5,
+                  "datasheet_url": null
+                },
+                {
+                  "indicator": "Reptile/amphibian species richness",
+                  "reference_value": 20.0,
+                  "value": 15,
+                  "star_score": 3.8,
+                  "datasheet_url": null
+                },
+                {
+                  "indicator": "Small mammal species richness",
+                  "reference_value": 15.0,
+                  "value": 9,
+                  "star_score": 3.0,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "No Undesirable Species": {
+              "attribute": "Species Composition",
+              "score": 2.0,
+              "indicators": [
+                {
+                  "indicator": "Shrub cover",
+                  "reference_value": 5.0,
+                  "value": 1,
+                  "star_score": 1.0,
+                  "datasheet_url": null
+                },
+                {
+                  "indicator": "Invasive species cover",
+                  "reference_value": 5.0,
+                  "value": 10,
+                  "star_score": 3.0,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "All Strata Present": {
+              "attribute": "Structural Diversity",
+              "score": 2.0,
+              "indicators": [
+                {
+                  "indicator": "Longleaf pine canopy",
+                  "reference_value": 30.0,
+                  "value": 8,
+                  "star_score": 1.3,
+                  "datasheet_url": null
+                },
+                {
+                  "indicator": "Herbaceous groundcover",
+                  "reference_value": 95.0,
+                  "value": 50,
+                  "star_score": 2.6,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "All Trophic Levels": {
+              "attribute": "Structural Diversity",
+              "score": 2.6,
+              "indicators": [
+                {
+                  "indicator": "Characteristic primary producers (rating)",
+                  "reference_value": null,
+                  "value": 3,
+                  "star_score": 3.0,
+                  "datasheet_url": null
+                },
+                {
+                  "indicator": "Characteristic primary consumers (rating)",
+                  "reference_value": null,
+                  "value": 3,
+                  "star_score": 3.0,
+                  "datasheet_url": null
+                },
+                {
+                  "indicator": "Characteristic secondary consumers (rating)",
+                  "reference_value": null,
+                  "value": 3,
+                  "star_score": 3.0,
+                  "datasheet_url": null
+                },
+                {
+                  "indicator": "Characteristic tertiary consumers/apex predators (rating)",
+                  "reference_value": null,
+                  "value": 1,
+                  "star_score": 1.0,
+                  "datasheet_url": null
+                },
+                {
+                  "indicator": "Characteristic decomposers and detritivores (rating)",
+                  "reference_value": null,
+                  "value": 3,
+                  "star_score": 3.0,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "Spatial Mosaic": {
+              "attribute": "Structural Diversity",
+              "score": 2.0,
+              "indicators": [
+                {
+                  "indicator": "Wet/dry areas, longleaf pine density (rating)",
+                  "reference_value": null,
+                  "value": 2,
+                  "star_score": 2.0,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "Productivity/cycling": {
+              "attribute": "Ecosystem Function",
+              "score": 1.7,
+              "indicators": [
+                {
+                  "indicator": "Prescribed fire frequency (years since fire)",
+                  "reference_value": 3.0,
+                  "value": 1,
+                  "star_score": 1.7,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "Habitat & Interactions": {
+              "attribute": "Ecosystem Function",
+              "score": 1.5,
+              "indicators": [
+                {
+                  "indicator": "RCW nest trees per acre",
+                  "reference_value": 100.0,
+                  "value": 5,
+                  "star_score": 0.3,
+                  "datasheet_url": null
+                },
+                {
+                  "indicator": "Herbaceous groundcover",
+                  "reference_value": 95.0,
+                  "value": 50,
+                  "star_score": 2.6,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "Resilience/recruitment": {
+              "attribute": "Ecosystem Function",
+              "score": 3.4,
+              "indicators": [
+                {
+                  "indicator": "Cover of shrubs or invasive species",
+                  "reference_value": 5.0,
+                  "value": 5,
+                  "star_score": 5.0,
+                  "datasheet_url": null
+                },
+                {
+                  "indicator": "Desirable herbaceous species cover",
+                  "reference_value": 90.0,
+                  "value": 30,
+                  "star_score": 1.7,
+                  "datasheet_url": null
+                },
+                {
+                  "indicator": "Longleaf pine seedlings per acre",
+                  "reference_value": 5.0,
+                  "value": 100,
+                  "star_score": 5.0,
+                  "datasheet_url": null
+                },
+                {
+                  "indicator": "Prescribed fire frequency (years since fire)",
+                  "reference_value": 3.0,
+                  "value": 1,
+                  "star_score": 1.7,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "Habitat Links": {
+              "attribute": "External Exchanges",
+              "score": 2.5,
+              "indicators": [
+                {
+                  "indicator": "Proportion of adjacent connected land with native habitat",
+                  "reference_value": 80.0,
+                  "value": 40,
+                  "star_score": 2.5,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "Gene Flows": {
+              "attribute": "External Exchanges",
+              "score": 4.0,
+              "indicators": [
+                {
+                  "indicator": "Lack of impediments to movement of species on/off site (rating)",
+                  "reference_value": null,
+                  "value": 4,
+                  "star_score": 4.0,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "Landscape Flows": {
+              "attribute": "External Exchanges",
+              "score": 4.0,
+              "indicators": [
+                {
+                  "indicator": "Animal movement corridors (rating)",
+                  "reference_value": null,
+                  "value": 3,
+                  "star_score": 3.0,
+                  "datasheet_url": null
+                },
+                {
+                  "indicator": "Floodplain connection (rating)",
+                  "reference_value": null,
+                  "value": 5,
+                  "star_score": 5.0,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "Contamination": {
+              "attribute": "Absence of Threats",
+              "score": 5.0,
+              "indicators": [
+                {
+                  "indicator": "Lack of indicators of contamination (rating)",
+                  "reference_value": null,
+                  "value": 5,
+                  "star_score": 5.0,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "Invasive Species": {
+              "attribute": "Absence of Threats",
+              "score": 4.0,
+              "indicators": [
+                {
+                  "indicator": "Cover of invasive species",
+                  "reference_value": 5.0,
+                  "value": 10,
+                  "star_score": 4.0,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "Over-utilization": {
+              "attribute": "Absence of Threats",
+              "score": 2.5,
+              "indicators": [
+                {
+                  "indicator": "Road density (rating)",
+                  "reference_value": null,
+                  "value": 2,
+                  "star_score": 2.0,
+                  "datasheet_url": null
+                },
+                {
+                  "indicator": "Use of site for non-habitat functions (rating)",
+                  "reference_value": null,
+                  "value": 3,
+                  "star_score": 3.0,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "Other Degradation Drivers": {
+              "attribute": "Absence of Threats",
+              "score": 3.0,
+              "indicators": [
+                {
+                  "indicator": "Storm or flood damage (rating)",
+                  "reference_value": null,
+                  "value": 3,
+                  "star_score": 3.0,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "Substrate Physical": {
+              "attribute": "Physical Conditions",
+              "score": 4.0,
+              "indicators": [
+                {
+                  "indicator": "Erosion, compaction, soil characteristics (rating)",
+                  "reference_value": null,
+                  "value": 4,
+                  "star_score": 4.0,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "Substrate Chemical": {
+              "attribute": "Physical Conditions",
+              "score": 3.0,
+              "indicators": [
+                {
+                  "indicator": "pH, salinity, nutrient levels, organic matter, bioindicators (rating)",
+                  "reference_value": null,
+                  "value": 3,
+                  "star_score": 3.0,
+                  "datasheet_url": null
+                }
+              ]
+            },
+            "Water chemo-physical": {
+              "attribute": "Physical Conditions",
+              "score": 3.0,
+              "indicators": [
+                {
+                  "indicator": "Water table/infiltration, turbidity, pH, DO (rating)",
+                  "reference_value": null,
+                  "value": 3,
+                  "star_score": 3.0,
+                  "datasheet_url": null
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "year": "2027",
+      "habitats": {}
+    },
+    {
+      "year": "2028",
+      "habitats": {}
+    },
+    {
+      "year": "2029",
+      "habitats": {}
+    },
+    {
+      "year": "2030",
+      "habitats": {}
+    },
+    {
+      "year": "2031",
+      "habitats": {}
+    },
+    {
+      "year": "2032",
+      "habitats": {}
+    }
+  ]
+}
