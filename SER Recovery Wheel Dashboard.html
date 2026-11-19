@@ -305,21 +305,20 @@ function drawWheel() {
       n.addEventListener("mouseleave", hideTip);
     });
 
-      // radial label lying along the spoke, on top of the slice
-    //move it to the edge of the circle 
-    const wedgeR = R_HUB + 5 * STAR_STEP;
+    //radial label at the center of the wedge 
+    const wedgeR = R_HUB + 2.5 * STAR_STEP;
     const fitsInside = wedgeR - R_HUB > 34;   // enough room for label + score
 
     let t1, t2;
     if (fitsInside) {
-      const rLab = wedgeR - 12;               // near the tip of the wedge
+      const rLab = wedgeR;               // near the tip of the wedge
       const lx = CX + rLab * Math.cos(rad(mid));
       const ly = CY + rLab * Math.sin(rad(mid));
       let rot = mid;                          // align text along the radius
       if (rot > 90) rot -= 180;               // keep it right-side-up
       else if (rot < -90) rot += 180;         // on the left half
       const opts = {
-        "text-anchor": "right", "font-size": 10.5,
+        "text-anchor": "middle", "font-size": 10.5,
         "font-family": "Helvetica, sans-serif", cursor: "pointer",
         transform: `rotate(${rot} ${lx} ${ly})`,
         "paint-order": "stroke", stroke: "rgba(255,255,255,0.85)",
