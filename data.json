@@ -15,7 +15,7 @@
           "components": {
             "Desirable Plants": {
               "attribute": "Species Composition",
-              "score": 2.2,
+              "score": 3.3,
               "indicators": [
                 {
                   "indicator": "Cypress or tupelo stems/acre",
@@ -1469,5 +1469,27 @@
       "year": "2032",
       "habitats": {}
     }
-  ]
+  ],
+  "habitatInventory": {
+    "bhsw": {
+      "name": "Bayhead Swamp",
+      "acres": 20.3
+    },
+    "hwfo": {
+      "name": "Hardwood Forest",
+      "acres": 127.4
+    },
+    "cytu": {
+      "name": "Cypress Tupelo Swamp",
+      "acres": 186.6
+    },
+    "cane": {
+      "name": "Rivercane Grassland",
+      "acres": 3.0
+    },
+    "pine": {
+      "name": "Longleaf Pine Savanna",
+      "acres": 469.9
+    }
+  }
 }
