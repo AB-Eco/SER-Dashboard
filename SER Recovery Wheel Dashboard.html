@@ -77,7 +77,7 @@
 
 <header>
   <h1>SER Recovery Wheel — Monitoring Dashboard</h1>
-  <p>Scores reflect similarity to the reference model (5 ★ = five-star condition). Click a wedge for the indicators behind its score.</p>
+  <p>Scores reflect similarity to the reference model (5 ★ = five-star condition).  a wedge for the indicators behind its score.</p>
 </header>
 
 <div class="controls">
@@ -467,7 +467,11 @@ function buildControls() {
   });
   if (!assessedYears().some(o => o.i === state.yearIndex)) state.yearIndex = assessedYears()[0].i;
   sel.value = state.yearIndex;
-  sel.addEventListener("change", () => { state.yearIndex = +sel.value; drawWheel(); });
+  sel.addEventListener("change", () => {
+    state.yearIndex = +sel.value;
+    if (state.selectedComp) showDetail(state.selectedComp);
+    drawWheel();
+  });
 
   const toggle = document.getElementById("habitatToggle");
   toggle.innerHTML = "";
