@@ -92,7 +92,7 @@
 <main>
   <div class="wheel-wrap">
     <svg id="wheel" viewBox="0 0 620 620" role="img" aria-label="SER recovery wheel polar bar chart"></svg>
-    <p class="hint" style="text-align:center"> Dashed arc = baseline (${DATA.years[BASELINE_YEAR_INDEX].year}). Radial rings mark 1–5 stars.</p>
+    <p class="hint" style="text-align:center"> `Dashed arc = baseline (${DATA.years[BASELINE_YEAR_INDEX].year}).` Radial rings mark 1–5 stars.</p>
   </div>
   <aside class="detail" id="detailPanel"></aside>
 </main>
@@ -309,7 +309,7 @@ function drawWheel() {
     if (sd.base !== null && state.yearIndex !== BASELINE_YEAR_INDEX) {
       const g = el("path", { d: arcPath(R_HUB + sd.base * STAR_STEP,
         sd.a1 + GAP + 1, sd.a1 + SLOT_DEG - GAP - 1),
-        fill: "none", stroke: "#444", "stroke-width": 2 });
+        fill: "none", stroke: "#444", "stroke-width": 2, "stroke-dasharray": "5 4" });
       sd.nodes.push(g);
     }
   });
