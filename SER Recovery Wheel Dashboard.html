@@ -103,7 +103,7 @@
 
 <footer>
   Site scores are area-weighted averages of assessed habitat types only.
-  Data: SER Five-star System &amp; Ecological Recovery Wheel
+  Based on the Society for Ecological Restoration Five-star System &amp; Ecological Recovery Wheel
   (<a href="https://onlinelibrary.wiley.com/doi/epdf/10.1111/rec.70441"
       target="_blank" rel="noopener">SER International Standards, 3rd ed.</a>).
 </footer>
@@ -343,7 +343,8 @@ function drawWheel() {
     const anchor = Math.abs(c) < 0.35 ? "middle" : (c > 0 ? "start" : "end");
     const t2 = txt(lx2, ly2, sd.score.toFixed(1) + " ★", {
       "text-anchor": anchor, "font-size": 10.5, "font-weight": "bold",
-      fill: ATTR_COLOR[sd.comp0.attribute], "font-family": "Helvetica, sans-serif"
+      fill: ATTR_COLOR[sd.comp0.attribute], "font-family": "Helvetica, sans-serif",
+      "dy": "0.35em"
     });
 
     sd.nodes.push(t1, t2);
