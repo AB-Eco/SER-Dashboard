@@ -237,6 +237,17 @@ function siteScore(yearIdx) {
   return den ? num / den : null;
 }
 
+  /*Score for the habitat that year = average of the attributes*/
+  function habitatScore(yearIdx, habId) {
+  const h = DATA.years[yearIdx].habitats[habId];
+  if (!h) return null;                          // habitat not assessed this year
+  const vals = Object.values(h.components)
+    .map(c => c.score)
+    .filter(s => typeof s === "number" && !isNaN(s));
+  if (!vals.length) return null;
+  return vals.reduce((s, v) => s + v, 0) / vals.length;
+}
+
 /* =====================================================================
    DRAW
    ===================================================================== */
@@ -353,20 +364,23 @@ function drawWheel() {
     });
   });   
 
-  // hub: site score + coverage
-  const sc = siteScore(state.yearIndex);
+    // hub: score for the current view (weighted site, or selected habitat)
+  const sc = (state.habitat === "all")
+    ? siteScore(state.yearIndex)
+    : habitatScore(state.yearIndex, state.habitat);
   txt(CX, CY - 8, sc === null ? "–" : sc.toFixed(2),
       { "text-anchor": "middle", "font-size": 20, "font-weight": "bold", fill: "#2b2b33" });
-  const cov = coverage(state.yearIndex);
-  const covTxt = cov.total && cov.assessed < cov.total
-    ? `covers ${cov.assessed.toFixed(0)} of ${cov.total.toFixed(0)} acres`
-    : (state.habitat === "all" ? "site score" : DATA.habitatNames[state.habitat]);
-  txt(CX, CY + 12, state.habitat === "all" ? covTxt : DATA.habitatNames[state.habitat],
-      { "text-anchor": "middle", "font-size": 9.5, fill: "#666" });
-  txt(CX, CY + 26, state.habitat === "all" && cov.assessed < cov.total
-      ? `(${Math.round(100 * cov.assessed / cov.total)}% of site area)`
-      : "", { "text-anchor": "middle", "font-size": 9.5, fill: "#666" });
-}
+
+  if (state.habitat === "all") {
+    const cov = coverage(state.yearIndex);
+    const covTxt = cov.total && cov.assessed < cov.total
+      ? `covers ${cov.assessed.toFixed(0)} of ${cov.total.toFixed(0)} acres (${Math.round(100 * cov.assessed / cov.total)}%)`
+      : "site score (area-weighted)";
+    txt(CX, CY + 12, covTxt, { "text-anchor": "middle", "font-size": 9.5, fill: "#666" });
+  } else {
+    txt(CX, CY + 12, DATA.habitatNames[state.habitat],
+        { "text-anchor": "middle", "font-size": 9.5, fill: "#666" });
+  }
 
 /* =====================================================================
    TOOLTIP
