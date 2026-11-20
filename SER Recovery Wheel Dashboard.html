@@ -47,6 +47,10 @@
     margin-right: 4px; border-radius: 2px; vertical-align: -1px;
     background: var(--dot);
   }
+  /* line-style swatch for the baseline ghost */
+  .legend span.linemarker::before {
+    width: 16px; height: 2px; border-radius: 0; vertical-align: 3px;
+  }
 
   main { display: flex; flex-wrap: wrap; gap: 1.2rem; padding: 1.2rem; align-items: flex-start; }
   .wheel-wrap { flex: 1 1 520px; min-width: 340px; }
@@ -92,8 +96,7 @@
 <main>
   <div class="wheel-wrap">
     <svg id="wheel" viewBox="0 0 620 620" role="img" aria-label="SER recovery wheel polar bar chart"></svg>
-    <p class="hint" style="text-align:center"> `Dashed arc = baseline (${DATA.years[BASELINE_YEAR_INDEX].year}).` Radial rings mark 1–5 stars.</p>
-  </div>
+    </div>
   <aside class="detail" id="detailPanel"></aside>
 </main>
 
@@ -497,7 +500,8 @@ function buildControls() {
 
 function buildLegend() {
   document.getElementById("legend").innerHTML = ATTR_ORDER
-    .map(a => `<span style="--dot:${ATTR_COLOR[a]}">${a}</span>`).join("");
+    .map(a => `<span style="--dot:${ATTR_COLOR[a]}">${a}</span>`).join("")
+    + `<span class="linemarker" style="--dot:#edea79">Baseline Score</span>`;
 }
 
 loadData();
