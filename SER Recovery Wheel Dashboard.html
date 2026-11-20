@@ -315,7 +315,7 @@ function drawWheel() {
     if (sd.base !== null && state.yearIndex !== BASELINE_YEAR_INDEX) {
       const g = el("path", { d: arcPath(R_HUB + sd.base * STAR_STEP,
         sd.a1 + GAP + 0, sd.a1 + SLOT_DEG - GAP - 0),
-        fill: "none", stroke: "#97a641", "stroke-width": 2});
+        fill: "none", stroke: "#7e315b", "stroke-width": 2});
       sd.nodes.push(g);
     }
   });
@@ -505,7 +505,7 @@ function buildControls() {
 function buildLegend() {
   document.getElementById("legend").innerHTML = ATTR_ORDER
     .map(a => `<span style="--dot:${ATTR_COLOR[a]}">${a}</span>`).join("")
-    + `<span class="linemarker" style="--dot:#97a641">Baseline Score</span>`;
+    + `<span class="linemarker" style="--dot:#7e315b">Baseline Score</span>`;
 }
 
 loadData();
