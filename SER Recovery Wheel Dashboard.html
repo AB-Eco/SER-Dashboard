@@ -138,7 +138,7 @@ const ATTR_COLOR = {
 };
 const ATTR_ORDER = ["Species Composition", "Structural Diversity", "Ecosystem Function",
                     "External Exchanges", "Absence of Threats", "Physical Conditions"];
-/* Display labels shortened so 19 spokes stay legible */
+/* Display labels shortened so 19 spokes stay legible - they fit, so shortened versions not needed and just match original */
 const SHORT = {
   "No Undesirable Species": "No Undesirable Species",
   "All Strata Present": "All Strata Present",
@@ -265,7 +265,7 @@ function drawWheel() {
   const slots = [];
   ATTR_ORDER.filter(a => byAttr[a]).forEach((attr, gi, arr) => {
     byAttr[attr].forEach(n => slots.push(n));
-//blank slot between groups    if (gi < arr.length - 1) slots.push(null);
+//remove blank slot between groups    if (gi < arr.length - 1) slots.push(null);
   });
 
   const SLOT_DEG = 360 / slots.length;
@@ -311,7 +311,7 @@ function drawWheel() {
     el("circle", { cx: CX, cy: CY, r: R_HUB, fill: "#fffdf8", stroke: "#999" });
 
     // baseline ghost
- //show baseline where same as score   if (base !== null && base !== score && state.yearIndex !== BASELINE_YEAR_INDEX) {
+ //remvoed to show baseline where same as score   if (base !== null && base !== score && state.yearIndex !== BASELINE_YEAR_INDEX) {
     if (base !== null && state.yearIndex !== BASELINE_YEAR_INDEX) {  
       el("path", { d: arcPath(R_HUB + base * STAR_STEP, a1 + GAP + 1, a1 + SLOT_DEG - GAP - 1),
         fill: "none", stroke: "#444", "stroke-width": 1.8, "stroke-dasharray": "5 4" });
@@ -401,7 +401,16 @@ function hideTip() { tooltip.style.display = "none"; }
 function fmt(v) {
   return (v === null || v === undefined) ? "—" : v;
 }
-function showDetail(compName) {
+
+   function showPanelPlaceholder() {
+  document.getElementById("detailPanel").innerHTML = `
+    <h2>Component details</h2>
+    <p class="hint">Select a habitat type and attribute to see details.</p>
+  `;
+}
+  
+  function showDetail(compName) {
+  if (state.habitat === "all") { showPanelPlaceholder(); return; }
   const y = DATA.years[state.yearIndex];
   const habitatId = state.habitat === "all"
     ? Object.keys(y.habitats)[0]   // show first assessed habitat when in "all" view
@@ -417,7 +426,7 @@ function showDetail(compName) {
       ? ind
       : [ind.indicator, ind.reference_value, ind.value, ind.star_score, ind.datasheet_url];
     const [iname, ref, val, stars, url] = d;
-   // const [iname, ref, val, stars, url] = ind;
+   //remove old definition   const [iname, ref, val, stars, url] = ind;
     const link = url ? `<a href="${url}" target="_blank" rel="noopener">datasheet</a>` : "—";
     rows += `<tr><td>${iname}</td><td>${fmt(ref)}</td><td>${fmt(val)}</td><td><strong>${fmt(stars)}</strong></td><td>${link}</td></tr>`;
   });
@@ -472,6 +481,7 @@ function buildControls() {
     if (key === state.habitat) b.classList.add("active");
     b.addEventListener("click", () => {
       state.habitat = key;
+      if (state.habitat === "all") { showPanelPlaceholder(); return; }
       toggle.querySelectorAll("button").forEach(x => x.classList.toggle("active", x === b));
       drawWheel();
     });
