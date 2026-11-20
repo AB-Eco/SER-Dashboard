@@ -305,16 +305,6 @@ function drawWheel() {
       n.addEventListener("mouseleave", hideTip);
     });
 
-     // star reference rings
-    for (let s = 1; s <= 5; s++) {
-      el("circle", { cx: CX, cy: CY, r: R_HUB + s * STAR_STEP,
-        fill: "none", stroke: "#ccc", "stroke-dasharray": "3 4" });
-      // ring number along the 12 o'clock axis
-      txt(CX + 4, CY - R_HUB - s * STAR_STEP + 4, s,
-          { "font-size": 9, fill: "#2b2b33", "font-family": "sans-serif" });
-    }
-    el("circle", { cx: CX, cy: CY, r: R_HUB, fill: "#fffdf8", stroke: "#999" });
-
     // baseline ghost
  //remvoed to show baseline where same as score   if (base !== null && base !== score && state.yearIndex !== BASELINE_YEAR_INDEX) {
     if (base !== null && state.yearIndex !== BASELINE_YEAR_INDEX) {  
@@ -367,6 +357,16 @@ function drawWheel() {
     });
   });   
 
+       // star reference rings
+    for (let s = 1; s <= 5; s++) {
+      el("circle", { cx: CX, cy: CY, r: R_HUB + s * STAR_STEP,
+        fill: "none", stroke: "#ccc", "stroke-dasharray": "3 4" });
+      // ring number along the 12 o'clock axis
+      txt(CX + 4, CY - R_HUB - s * STAR_STEP + 4, s,
+          { "font-size": 9, fill: "#2b2b33", "font-family": "sans-serif" });
+    }
+    el("circle", { cx: CX, cy: CY, r: R_HUB, fill: "#fffdf8", stroke: "#999" });
+  
     // hub: score for the current view (weighted site, or selected habitat)
   const sc = (state.habitat === "all")
     ? siteScore(state.yearIndex)
