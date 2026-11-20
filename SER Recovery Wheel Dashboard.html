@@ -308,8 +308,8 @@ function drawWheel() {
   spokeData.forEach(sd => {
     if (sd.base !== null && state.yearIndex !== BASELINE_YEAR_INDEX) {
       const g = el("path", { d: arcPath(R_HUB + sd.base * STAR_STEP,
-        sd.a1 + GAP + 1, sd.a1 + SLOT_DEG - GAP - 1),
-        fill: "none", stroke: "#444", "stroke-width": 2, "stroke-dasharray": "5 4" });
+        sd.a1 + GAP + 0, sd.a1 + SLOT_DEG - GAP - 0),
+        fill: "none", stroke: "#edea79", "stroke-width": 2});
       sd.nodes.push(g);
     }
   });
@@ -425,7 +425,6 @@ function fmt(v) {
       ? ind
       : [ind.indicator, ind.reference_value, ind.value, ind.star_score, ind.datasheet_url];
     const [iname, ref, val, stars, url] = d;
-   //remove old definition   const [iname, ref, val, stars, url] = ind;
     const link = url ? `<a href="${url}" target="_blank" rel="noopener">datasheet</a>` : "—";
     rows += `<tr><td>${iname}</td><td>${fmt(ref)}</td><td>${fmt(val)}</td><td><strong>${fmt(stars)}</strong></td><td>${link}</td></tr>`;
   });
