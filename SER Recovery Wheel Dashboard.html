@@ -378,7 +378,9 @@ function drawWheel() {
       : "site score (area-weighted)";
     txt(CX, CY + 12, covTxt, { "text-anchor": "middle", "font-size": 9.5, fill: "#666" });
   } else {
-    txt(CX, CY + 12, DATA.habitatNames[state.habitat] + " " + DATA.years[state.yearIndex].habitats[state.habitat].acres + " acres",
+    txt(CX, CY + 12, DATA.habitatNames[state.habitat],
+        { "text-anchor": "middle", "font-size": 9.5, fill: "#666" });
+    txt(CX, CY + 20, DATA.years[state.yearIndex].habitats[state.habitat].acres + " acres",
         { "text-anchor": "middle", "font-size": 9.5, fill: "#666" });
   }
 }
