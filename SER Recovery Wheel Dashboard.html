@@ -317,7 +317,7 @@ function drawWheel() {
     // component name: radial label inside the wedge
     const wedgeR = R_HUB + 2.5 * STAR_STEP;
     const lx = CX + wedgeR * Math.cos(rad(sd.mid));
-    const ly = CY + wedgeR * Math.sin(rad.mid));
+    const ly = CY + wedgeR * Math.sin(rad(sd.mid));
     let rot = sd.mid;
     if (rot > 90) rot -= 180;
     else if (rot < -90) rot += 180;
