@@ -308,7 +308,7 @@ function drawWheel() {
         fill: "none", stroke: "#ccc", "stroke-dasharray": "3 4" });
       // ring number along the 12 o'clock axis
       txt(CX + 4, CY - R_HUB - s * STAR_STEP + 4, s,
-          { "font-size": 9, fill: "#999", "font-family": "sans-serif" });
+          { "font-size": 9, fill: "#2b2b33", "font-family": "sans-serif" });
     }
     el("circle", { cx: CX, cy: CY, r: R_HUB, fill: "#fffdf8", stroke: "#999" });
 
@@ -380,7 +380,7 @@ function drawWheel() {
   } else {
     txt(CX, CY + 12, DATA.habitatNames[state.habitat],
         { "text-anchor": "middle", "font-size": 9.5, fill: "#666" });
-    txt(CX, CY + 20, DATA.years[state.yearIndex].habitats[state.habitat].acres + " acres",
+    txt(CX, CY + 24, DATA.years[state.yearIndex].habitats[state.habitat].acres + " acres",
         { "text-anchor": "middle", "font-size": 9.5, fill: "#666" });
   }
 }
