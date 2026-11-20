@@ -156,7 +156,7 @@ const CX = 310, CY = 315, R_HUB = 62, R_RIM = 245;
 const STAR_STEP = (R_RIM - R_HUB) / 5;
 const BASELINE_YEAR_INDEX = 0;
 
-const state = { yearIndex: 0, habitat: "all" };
+const state = { yearIndex: 0, habitat: "all", selectedComp:null };
 const svg = document.getElementById("wheel");
 const SVGNS = "http://www.w3.org/2000/svg";
 const tooltip = document.getElementById("tooltip");
@@ -293,6 +293,7 @@ function drawWheel() {
     // interaction
     const hit = [w];
     hit.forEach(n => {
+      state.selectedComp = name;
       n.addEventListener("click", () => showDetail(name));
       n.addEventListener("mousemove", ev => showTip(ev,
         `<strong>${SHORT[name] || name}</strong><br>${comp0.attribute}<br>Score: ${score.toFixed(1)} ★` +
@@ -481,7 +482,11 @@ function buildControls() {
     if (key === state.habitat) b.classList.add("active");
     b.addEventListener("click", () => {
       state.habitat = key;
-      if (state.habitat === "all") showPanelPlaceholder();
+      if (state.habitat === "all") {
+        showPanelPlaceholder();
+      } else if (state.selectedComp) {
+        showDetail(state.selectedComp);   // refresh panel for the new habitat
+      }
       toggle.querySelectorAll("button").forEach(x => x.classList.toggle("active", x === b));
       drawWheel();
     });
