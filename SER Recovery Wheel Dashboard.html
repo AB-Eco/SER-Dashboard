@@ -378,7 +378,7 @@ function drawWheel() {
   if (state.habitat === "all") {
     const cov = coverage(state.yearIndex);
     const covTxt = cov.total && cov.assessed < cov.total
-      ? `covers ${cov.assessed.toFixed(0)} of ${cov.total.toFixed(0)} acres (${Math.round(100 * cov.assessed / cov.total)}%)`
+      ? `${cov.assessed.toFixed(0)} of ${cov.total.toFixed(0)} acres (${Math.round(100 * cov.assessed / cov.total)}%)`
       : "site score (area-weighted)";
     txt(CX, CY + 12, covTxt, { "text-anchor": "middle", "font-size": 9.5, fill: "#666" });
   } else {
