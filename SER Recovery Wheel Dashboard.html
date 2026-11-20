@@ -500,8 +500,6 @@ function buildLegend() {
     .map(a => `<span style="--dot:${ATTR_COLOR[a]}">${a}</span>`).join("");
 }
 
-window.addEventListener("resize", () => drawWheel());
-
 loadData();
 function init() {
   state.yearIndex = assessedYears()[assessedYears().length - 1].i;
