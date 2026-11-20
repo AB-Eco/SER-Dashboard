@@ -213,9 +213,12 @@ function coverage(yearIdx) {
   const y = DATA.years[yearIdx];
   let assessed = 0, total = 0;
   for (const hid in DATA.habitatNames) {
+    // total: every habitat's acreage from the full inventory
+    const inv = DATA.habitatInventory && DATA.habitatInventory[hid];
+    if (inv) total += inv.acres;
+    // assessed: only habitats with data in this year
     const h = y.habitats[hid];
     if (h) assessed += h.acres;
-    total += h ? h.acres : (DATA.totalAcres && DATA.totalAcres[hid]) || 0;
   }
   return { assessed, total };
 }
