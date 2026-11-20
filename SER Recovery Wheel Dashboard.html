@@ -293,8 +293,10 @@ function drawWheel() {
     // interaction
     const hit = [w];
     hit.forEach(n => {
-      state.selectedComp = name;
-      n.addEventListener("click", () => showDetail(name));
+      n.addEventListener("click", () => {
+        state.selectedComp = name;      // ← runs only when THIS wedge is clicked
+        showDetail(name);
+      });
       n.addEventListener("mousemove", ev => showTip(ev,
         `<strong>${SHORT[name] || name}</strong><br>${comp0.attribute}<br>Score: ${score.toFixed(1)} ★` +
         (base !== null ? `<br>Baseline: ${base.toFixed(1)} ★` : "")));
