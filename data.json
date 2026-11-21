@@ -682,6 +682,24 @@
             }
           }
         },
+        "cane": {
+          "acres": 3.0,
+          "components": {
+            "Water chemo-physical": {
+              "attribute": "Physical Conditions",
+              "score": 4.0,
+              "indicators": [
+                {
+                  "indicator": "Water table/infiltration, turbidity, pH, DO (rating)",
+                  "reference_value": null,
+                  "value": 4,
+                  "star_score": 4.0,
+                  "datasheet_url": null
+                }
+              ]
+            }
+          }
+        },
         "pine": {
           "acres": 469.9,
           "components": {
@@ -1058,6 +1076,24 @@
     {
       "year": "2026",
       "habitats": {
+        "bhsw": {
+          "acres": 20.3,
+          "components": {
+            "Substrate Chemical": {
+              "attribute": "Physical Conditions",
+              "score": 3.0,
+              "indicators": [
+                {
+                  "indicator": "pH, nutrient levels, organic matter, bioindicators (rating)",
+                  "reference_value": null,
+                  "value": 3,
+                  "star_score": 3.0,
+                  "datasheet_url": null
+                }
+              ]
+            }
+          }
+        },
         "cytu": {
           "acres": 186.6,
           "components": {
@@ -1395,6 +1431,24 @@
                   "reference_value": null,
                   "value": 4,
                   "star_score": 4.0,
+                  "datasheet_url": null
+                }
+              ]
+            }
+          }
+        },
+        "cane": {
+          "acres": 3.0,
+          "components": {
+            "Water chemo-physical": {
+              "attribute": "Physical Conditions",
+              "score": 5.0,
+              "indicators": [
+                {
+                  "indicator": "Water table/infiltration, turbidity, pH, DO (rating)",
+                  "reference_value": null,
+                  "value": 5,
+                  "star_score": 5.0,
                   "datasheet_url": null
                 }
               ]
